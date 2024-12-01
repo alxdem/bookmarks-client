@@ -1,0 +1,15 @@
+:root {
+    --color-white: #ffffff;
+
+    --color-main_100: #9988ff;
+    --color-main_200: #8877ee;
+    --color-main_500: #332299;
+    --color-main_700: #110077;
+
+    --color-secondary_300: #cccccc;
+    --color-secondary_400: #bbbbbb;
+    --color-secondary_500: #aaaaaa;
+    --color-secondary_800: #333333;
+
+    --color-bg-primary: #FCFCFD;
+}

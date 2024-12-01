@@ -1,0 +1,12 @@
+.main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    height: 100%;
+}
+
+.sidebar {
+    border-right: 1px solid;
+    border-color: var(--color-secondary_300);
+}

@@ -1,0 +1,79 @@
+.card {
+    position: relative;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    background-color: var(--color-white);
+    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0px 0px,
+        rgba(94, 93, 102, 0.1) 2px 2px 3px 0px;
+}
+
+.card:hover {
+    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0px 0px,
+        rgba(94, 93, 102, 0.2) 2px 5px 10px 0px;
+}
+
+.link {
+    display: block;
+    text-decoration: none;
+    cursor: grab;
+}
+
+.main {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+}
+
+.logo {
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.logoPlug {
+    background-color: var(--color-secondary_300);
+}
+
+.title {
+    margin: 0;
+    font-weight: 400;
+    color: var(--color-secondary_800);
+    font-size: 14px;
+}
+
+.footer {
+    padding: 10px;
+    border-top: 1px solid var(--color-secondary_500);
+    box-sizing: border-box;
+    min-height: 40px;
+}
+
+.footer p {
+    font-size: 12px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--color-secondary_500);
+    margin: 0;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    z-index: 5;
+    display: flex;
+    gap: 6px;
+    transform: translateY(40px);
+    transition: transform ease-in 0.15s;
+}
+
+.card:hover .buttons {
+    transform: translateY(0px);
+}

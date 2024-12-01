@@ -1,8 +1,60 @@
-function Card() {
+import cn from 'classnames';
+import { CardProps } from './Card.props';
+import styles from './Card.module.css';
+import Button from '../Button/Button';
+import XIcon from '../../assets/svg/x.svg?react';
+import EditIcon from '../../assets/svg/edit.svg?react';
+
+const Card = ({
+    userId,
+    title,
+    url,
+    description,
+    categoryId,
+    order,
+    image,
+}: CardProps): JSX.Element => {
+    const remove = () => {
+        console.log('remove', userId);
+        console.log('categoryId', categoryId);
+        console.log('order', order);
+        console.log('image', image);
+    };
+
+    const logo = image
+        ? <img className={styles.logo} src={image} alt={title} />
+        : <span className={cn(styles.logo, styles.logoPlug)}></span>;
+
     return (
-        <a href=''>
-            rrr
-        </a>
+        <article className={styles.card}>
+            <a
+                className={styles.link}
+                href={url}
+                target='_blank'
+            >
+                <div className={styles.main}>
+                    {logo}
+                    <h2 className={styles.title}>{title}</h2>
+                </div>
+                <div className={styles.footer}>
+                    <p>{description || title}</p>
+                </div>
+            </a>
+            <div className={styles.buttons}>
+                <Button
+                    className={cn(styles.button, styles.edit)}
+                    onClick={remove}
+                >
+                    <EditIcon />
+                </Button>
+                <Button
+                    className={cn(styles.button, styles.remove)}
+                    onClick={remove}
+                >
+                    <XIcon />
+                </Button>
+            </div>
+        </article>
     )
 }
 

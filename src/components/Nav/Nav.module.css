@@ -1,0 +1,16 @@
+.nav {
+    border-top: 1px solid var(--color-secondary_300);
+}
+
+.link {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+    color: var(--color-secondary_800);
+    border-bottom: 1px solid var(--color-secondary_300);
+    font-size: 16px;
+}
+
+.linkActive {
+    color: var(--color-main_200);
+}
