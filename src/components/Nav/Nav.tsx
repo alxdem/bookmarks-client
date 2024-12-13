@@ -1,20 +1,24 @@
 import styles from './Nav.module.css';
-import { DataContext } from '../../App';
 import { useContext } from 'react';
 import cn from 'classnames';
+import { DataContext } from '../../context/DataContext';
 
 const Nav = () => {
-    const { dataObject, setDataObject } = useContext(DataContext);
+    const { activeCategory, categories, setActiveCategory } = useContext(DataContext) || {};
+
+    if (!activeCategory || !categories || !setActiveCategory) {
+        // TODO: Add loader element
+        return (
+            <p>Context not found</p>
+        );
+    }
 
     const change = (id: string) => {
-        setDataObject({
-            ...dataObject,
-            activeCategory: id,
-        });
+        setActiveCategory(id);
     };
 
-    const elements = dataObject.categories.map(item => {
-        const activeClass = item._id === dataObject.activeCategory ? styles.linkActive : null;
+    const elements = categories ? categories.map(item => {
+        const activeClass = item._id === activeCategory ? styles.linkActive : null;
 
         return (
             <a
@@ -25,7 +29,7 @@ const Nav = () => {
                 {item.title}
             </a>
         );
-    });
+    }) : [];
     return (
         <nav className={styles.nav}>
             {elements}

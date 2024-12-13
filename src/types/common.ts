@@ -19,3 +19,11 @@ export interface Bookmark {
     order?: number,
     image?: string,
 }
+
+export type CrudMethod = 'GET' | 'POST' | 'PATCH' | 'DEL';
+
+export interface FetchOptions {
+    method?: CrudMethod;
+    headers?: HeadersInit;
+    body?: BodyInit;
+}

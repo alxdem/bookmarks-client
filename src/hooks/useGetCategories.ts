@@ -1,30 +1,62 @@
 import { useEffect, useState } from 'react';
 import { Category } from '../types/common';
+import { message } from '../utils/variables';
 
-const tempCategoriesData = [
-    {
-        _id: "c1",
-        title: 'Socials',
-        description: 'List of popular social networks',
-        order: 0,
-    },
-    {
-        _id: "c2",
-        title: 'Offline',
-        description: '',
-        order: 0,
-    }
-];
+interface useGetCategoriesProps {
+    (userId: string): [Category[], boolean, string];
+}
 
-function useGetCategories() {
+const useGetCategories: useGetCategoriesProps = (userId) => {
     const [data, setData] = useState<Category[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const STORAGE_KEY = 'categories';
+
+    if (!userId) {
+        throw Error(message.USER_ID_NOT_FOUND);
+    }
 
     useEffect(() => {
-        console.log('USE * getCategories');
-        setData(tempCategoriesData);
-    }, [])
+        const urlWithParams = `${import.meta.env.VITE_API_URL}/categories?userId=${userId}`;
 
-    return data;
+        const fetchData = async () => {
+            try {
+                const localJson = localStorage.getItem(STORAGE_KEY);
+                const localData = localJson ? JSON.parse(localJson) : null;
+
+                if (localData) {
+                    setData(localData);
+                    setError('');
+                    return;
+                }
+
+                const res = await fetch(urlWithParams);
+
+                if (!res.ok) {
+                    throw Error(message.CATEGORIES_GET_ERROR);
+                }
+
+                const dataJson = await res.json();
+
+                setData(dataJson);
+                setError('');
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataJson));
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    setError(error);
+                } else if (error instanceof TypeError) {
+                    setError(error.message);
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [userId]);
+
+    return [data, isLoading, error];
 }
 
 export default useGetCategories;

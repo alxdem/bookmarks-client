@@ -1,67 +1,62 @@
 import { useEffect, useState } from 'react';
 import { Bookmark } from '../types/common';
+import { message } from '../utils/variables';
 
-const tempData = [
-    {
-        _id: "rerwr3",
-        userId: "321321",
-        title: "Facebook",
-        url: "https://www.facebook.com/",
-        description: "",
-        categoryId: "c1",
-        order: 0,
-        image: "",
-    },
-    {
-        _id: "dsd72331",
-        userId: "3213321",
-        title: "Kinopoisk",
-        url: "https://www.kinopoisk.ru/",
-        description: "Поиск фильмов, новости кино, отзывы пользователей, афиша кинотеатров",
-        categoryId: "c1",
-        order: 2,
-        image: "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-favicon/favicon-144.png",
-    },
-    {
-        _id: "dsd723g",
-        userId: "3213321",
-        title: "Onix",
-        url: "https://www.kinopoisk.ru/",
-        description: "Поиск фильмов, новости кино, отзывы пользователей, афиша кинотеатров",
-        categoryId: "c2",
-        order: 0,
-        image: "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-favicon/favicon-144.png",
-    },
-    {
-        _id: "dsd7231",
-        userId: "3213a321",
-        title: "Kinopoisk",
-        url: "https://www.kinopoisk.ru/",
-        description: "Поиск фильмов, новости кино, отзывы пользователей, афиша кинотеатров",
-        categoryId: "c1",
-        order: 2,
-        image: "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-favicon/favicon-144.png",
-    },
-    {
-        _id: "dsd723dg",
-        userId: "3213321",
-        title: "Onix",
-        url: "https://www.kinopoisk.ru/",
-        description: "Поиск фильмов, новости кино, отзывы пользователей, афиша кинотеатров",
-        categoryId: "c2",
-        order: 0,
-        image: "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-favicon/favicon-144.png",
-    }
-];
+interface useGetBookmarksProps {
+    (userId: string): [Bookmark[], boolean, string];
+}
 
-function useGetBookmarks() {
+const useGetBookmarks: useGetBookmarksProps = (userId) => {
     const [data, setData] = useState<Bookmark[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const STORAGE_KEY = 'bookmarks';
+
+    if (!userId) {
+        throw Error(message.USER_ID_NOT_FOUND);
+    }
 
     useEffect(() => {
-        setData(tempData);
-    }, []);
+        const urlWithParams = `${import.meta.env.VITE_API_URL}/items?userId=${userId}`;
 
-    return data;
+        const fetchData = async () => {
+            try {
+                const localJson = localStorage.getItem(STORAGE_KEY);
+                const localData = localJson ? JSON.parse(localJson) : null;
+
+                if (localData && localData.length) {
+                    setData(localData);
+                    setError('');
+                    return;
+                }
+
+                const res = await fetch(urlWithParams);
+
+                if (!res.ok) {
+                    throw Error(message.BOOKMARKS_GET_ERROR);
+                }
+
+                const dataJson = await res.json();
+
+                setData(dataJson);
+                setError('');
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataJson));
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    setError(error);
+                } else if (error instanceof TypeError) {
+                    setError(error.message);
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [userId]);
+
+    return [data, isLoading, error];
 }
 
 export default useGetBookmarks;
