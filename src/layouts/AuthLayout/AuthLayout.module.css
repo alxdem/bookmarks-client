@@ -1,0 +1,55 @@
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+}
+
+.loading .form {
+    pointer-events: none;
+}
+
+.message {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--color-error-700);
+}
+
+.button {
+    margin-top: 16px;
+}
+
+.loader {
+    color: var(--color-primary-950);
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    display: none;
+}
+
+.loading .loader {
+    display: block;
+}
+
+.formElement {
+    opacity: 1;
+}
+
+.loading .formElement {
+    opacity: 0.5;
+    transition: opacity 0.3s ease-out;
+}

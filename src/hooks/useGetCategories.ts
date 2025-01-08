@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Category } from '../types/common';
 import { message } from '../utils/variables';
+import { DataContext } from '../context/DataContext';
 
 interface useGetCategoriesProps {
     (userId: string): [Category[], boolean, string];
@@ -12,6 +13,8 @@ const useGetCategories: useGetCategoriesProps = (userId) => {
     const [error, setError] = useState('');
 
     const STORAGE_KEY = 'categories';
+
+    const { token } = useContext(DataContext) || {};
 
     if (!userId) {
         throw Error(message.USER_ID_NOT_FOUND);
@@ -31,7 +34,11 @@ const useGetCategories: useGetCategoriesProps = (userId) => {
                     return;
                 }
 
-                const res = await fetch(urlWithParams);
+                const res = await fetch(urlWithParams, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
                 if (!res.ok) {
                     throw Error(message.CATEGORIES_GET_ERROR);

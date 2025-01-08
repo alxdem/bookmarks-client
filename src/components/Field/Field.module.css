@@ -1,0 +1,45 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.input {
+    height: 52px;
+    padding: 2px 16px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    width: 100%;
+    background-color: var(--color-primary-100);
+    font-size: 16px;
+    color: var(--color-secondary-950);
+}
+
+.input:focus {
+    background-color: var(--color-primary-200);
+}
+
+.isError .input {
+    background-color: var(--color-error-100);
+}
+
+.error {
+    color: var(--color-error-700);
+    font-size: 12px;
+    line-height: 1.1;
+}
+
+.label {
+    color: var(--color-main_700);
+    font-size: 14px;
+    line-height: 1.1;
+    cursor: pointer;
+    color: var(--color-secondary-700);
+}
+
+.isError .label {
+    color: var(--color-error-700);
+}

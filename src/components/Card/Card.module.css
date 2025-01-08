@@ -44,6 +44,8 @@
     font-weight: 400;
     color: var(--color-secondary_800);
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .footer {

@@ -12,4 +12,19 @@
     --color-secondary_800: #333333;
 
     --color-bg-primary: #FCFCFD;
+
+    --color-error-50: #FFF1F2;
+    --color-error-100: #FFE4E6;
+    --color-error-700: #BE123C;
+
+    /* New */
+    --color-primary-50: #EFF6FF;
+    --color-primary-100: #DBEAFE;
+    --color-primary-200: #BFDBFE;
+    --color-primary-500: #3B82F6;
+    --color-primary-950: #172554;
+
+    --color-secondary-50: #F8FAFC;
+    --color-secondary-700: #334155;
+    --color-secondary-950: #020617;
 }
