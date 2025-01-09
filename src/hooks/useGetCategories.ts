@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { Category } from '../types/common';
-import { message } from '../utils/variables';
-import { DataContext } from '../context/DataContext';
+import { Category } from '@t/commonTypes';
+import { message } from '@utils/variables';
+import { DataContext } from '@context/DataContext';
 
 interface useGetCategoriesProps {
     (userId: string): [Category[], boolean, string];

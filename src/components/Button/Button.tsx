@@ -1,5 +1,5 @@
-import { ButtonProps } from './Button.props';
-import styles from './Button.module.css';
+import { ButtonProps } from '@components/Button/Button.props';
+import styles from '@components/Button/Button.module.css';
 import cn from 'classnames';
 
 const Button = ({ children, className, isDisabled, type = 'default' }: ButtonProps) => {

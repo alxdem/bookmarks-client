@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Bookmark } from '../types/common';
-import { message } from '../utils/variables';
+import { Bookmark } from '@t/commonTypes';
+import { message } from '@utils/variables';
 
 interface useGetBookmarksProps {
     (userId: string): [Bookmark[], boolean, string];

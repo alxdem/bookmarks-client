@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Bookmark, Category } from '../types/common';
+import { Bookmark, Category } from '@t/commonTypes';
 
 type TokenType = string | null;
 

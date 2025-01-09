@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
-import { DataContext } from '../../context/DataContext';
-import Field from '../../components/Field/Field';
-import Button from '../../components/Button/Button';
-import styles from './AuthLayout.module.css';
+import { DataContext } from '@context/DataContext';
+import Field from '@components/Field/Field';
+import Button from '@components/Button/Button';
+import styles from '@layouts/AuthLayout/AuthLayout.module.css';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import SpinnerIcon from '../../assets/svg/spinner.svg?react';
+import SpinnerIcon from '@assets/svg/spinner.svg?react';
 import cn from 'classnames';
 
 const AuthLayout = () => {

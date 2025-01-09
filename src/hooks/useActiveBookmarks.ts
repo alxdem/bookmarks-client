@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { DataContext } from '../context/DataContext';
-import { Bookmark } from '../types/common';
+import { DataContext } from '@context/DataContext';
+import { Bookmark } from '@t/commonTypes';
 
 function useActiveBookmarks() {
     const { activeCategory, bookmarks } = useContext(DataContext) || {};

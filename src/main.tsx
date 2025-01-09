@@ -1,7 +1,7 @@
 import { Profiler, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
+import '@/index.css';
+import App from '@/App';
 
 const onRender = (id: string) => {
     console.log('id', id);

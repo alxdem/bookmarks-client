@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import Nav from '../../components/Nav/Nav';
-import { DataContext } from '../../context/DataContext';
-import styles from './Sidebar.module.css';
-import { SidebarProps } from './Sidebar.props';
+import Nav from '@components/Nav/Nav';
+import { DataContext } from '@context/DataContext';
+import styles from '@layouts/Sidebar/Sidebar.module.css';
+import { SidebarProps } from '@layouts/Sidebar/Sidebar.props';
 import cn from 'classnames';
 
 const Sidebar = ({ className }: SidebarProps) => {

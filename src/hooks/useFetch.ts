@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FetchOptions } from '../types/common';
+import { FetchOptions } from '@t/commonTypes';
 
 
 

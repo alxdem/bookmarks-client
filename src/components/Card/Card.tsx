@@ -1,9 +1,9 @@
 import cn from 'classnames';
-import { CardProps } from './Card.props';
-import styles from './Card.module.css';
-import Button from '../Button/Button';
-import XIcon from '../../assets/svg/x.svg?react';
-import EditIcon from '../../assets/svg/edit.svg?react';
+import { CardProps } from '@components/Card/Card.props';
+import styles from '@components/Card/Card.module.css';
+import Button from '@components/Button/Button';
+import XIcon from '@assets/svg/x.svg?react';
+import EditIcon from '@assets/svg/edit.svg?react';
 
 const Card = ({
     userId,

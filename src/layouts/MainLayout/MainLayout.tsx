@@ -1,10 +1,10 @@
-import { ILayout } from '../../types/common';
-import styles from './MainLayout.module.css';
-import Sidebar from '../Sidebar/Sidebar';
+import { ILayout } from '@t/commonTypes';
+import styles from '@layouts/MainLayout/MainLayout.module.css';
+import Sidebar from '@layouts/Sidebar/Sidebar';
 import { useContext, useEffect } from 'react';
-import { DataContext } from '../../context/DataContext';
-import useGetCategories from '../../hooks/useGetCategories';
-import useGetBookmarks from '../../hooks/useGetBookmarks';
+import { DataContext } from '@context/DataContext';
+import useGetCategories from '@hooks/useGetCategories';
+import useGetBookmarks from '@hooks/useGetBookmarks';
 
 const MainLayout = ({ children }: ILayout) => {
     const userId = '673b3e623f2c79dde1aa2e4d';

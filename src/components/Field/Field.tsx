@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Field.module.css';
-import { FieldProps } from './Field.props';
+import styles from '@components/Field/Field.module.css';
+import { FieldProps } from '@components/Field/Field.props';
 import cn from 'classnames';
 
 const Field = React.forwardRef<HTMLInputElement, FieldProps>(({ label, error, className, type, onChange }, ref) => {

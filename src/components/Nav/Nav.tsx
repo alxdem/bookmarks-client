@@ -1,7 +1,7 @@
-import styles from './Nav.module.css';
+import styles from '@components/Nav/Nav.module.css';
 import { useContext } from 'react';
 import cn from 'classnames';
-import { DataContext } from '../../context/DataContext';
+import { DataContext } from '@context/DataContext';
 
 const Nav = () => {
     const { activeCategory, categories, setActiveCategory } = useContext(DataContext) || {};

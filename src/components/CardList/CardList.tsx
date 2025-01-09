@@ -1,6 +1,6 @@
-import styles from './CardList.module.css';
-import useActiveBookmarks from '../../hooks/useActiveBookmarks';
-import Card from '../Card/Card';
+import styles from '@components/CardList/CardList.module.css';
+import useActiveBookmarks from '@hooks/useActiveBookmarks';
+import Card from '@components/Card/Card';
 
 const CardList = (): JSX.Element => {
     const items = useActiveBookmarks();

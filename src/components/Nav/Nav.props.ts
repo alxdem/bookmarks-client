@@ -1,4 +1,4 @@
-// import { Category } from '../../types/common';
+// import { Category } from '@t/common';
 
 // export interface NavProps {
 //     items?: Category[];
