@@ -1,5 +1,3 @@
-// import { Category } from '@t/common';
-
-// export interface NavProps {
-//     items?: Category[];
-// }
+export interface NavProps extends React.HTMLAttributes<HTMLDivElement> {
+    className?: string;
+}

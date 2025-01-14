@@ -4,6 +4,7 @@ import { DataContext } from '@context/DataContext';
 import styles from '@layouts/Sidebar/Sidebar.module.css';
 import { SidebarProps } from '@layouts/Sidebar/Sidebar.props';
 import cn from 'classnames';
+import Button from '@/components/Button/Button';
 
 const Sidebar = ({ className }: SidebarProps) => {
     const { setToken } = useContext(DataContext) || {};
@@ -20,10 +21,21 @@ const Sidebar = ({ className }: SidebarProps) => {
     return (
         <aside className={cn(styles.sidebar, className)}>
             sidebar
-            <Nav />
-            <button
+            <Nav className={styles.nav} />
+            <Button
+                className={styles.buttonCreate}
+                size='sm'
+            >
+                Создать категорию
+            </Button>
+            <Button
+                className={styles.buttonExit}
+                size='sm'
                 onClick={exit}
-            >Выйти</button>
+                color='secondary'
+            >
+                Выйти
+            </Button>
         </aside>
     );
 };

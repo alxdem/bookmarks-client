@@ -1,3 +1,19 @@
 .sidebar {
+    display: flex;
+    flex-direction: column;
     background-color: var(--color-bg-primary);
+    padding: 10px;
+}
+
+.nav {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.buttonCreate {
+    margin-top: 10px;
+}
+
+.buttonExit {
+    margin-top: auto;
 }

@@ -2,8 +2,9 @@ import styles from '@components/Nav/Nav.module.css';
 import { useContext } from 'react';
 import cn from 'classnames';
 import { DataContext } from '@context/DataContext';
+import { NavProps } from '@components/Nav/Nav.props';
 
-const Nav = () => {
+const Nav = ({ className }: NavProps) => {
     const { activeCategory, categories, setActiveCategory } = useContext(DataContext) || {};
 
     if (!activeCategory || !categories || !setActiveCategory) {
@@ -31,7 +32,7 @@ const Nav = () => {
         );
     }) : [];
     return (
-        <nav className={styles.nav}>
+        <nav className={cn(styles.nav, className)}>
             {elements}
         </nav>
     )
