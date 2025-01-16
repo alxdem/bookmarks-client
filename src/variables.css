@@ -30,4 +30,6 @@
     --color-secondary-300: #CBD5E1;
     --color-secondary-700: #334155;
     --color-secondary-950: #020617;
+
+    --bg-transparent: rgb(2, 6, 23, 0.6);
 }

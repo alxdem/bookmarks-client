@@ -8,7 +8,8 @@ const Button = ({
     isDisabled,
     type = 'default',
     size = 'md',
-    color = 'primary'
+    color = 'primary',
+    ...rest
 }: ButtonProps) => {
     const classes = cn(styles.button, styles[type], styles[size], styles[color], className);
 
@@ -16,6 +17,7 @@ const Button = ({
         <button
             className={classes}
             disabled={isDisabled}
+            {...rest}
         >
             {children}
         </button>

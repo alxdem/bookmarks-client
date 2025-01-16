@@ -1,0 +1,44 @@
+.close {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.close svg {
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+    color: var(--color-secondary-700);
+}
+
+.close:hover svg {
+    color: var(--color-secondary-950);
+}
+
+.inner {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    background-color: var(--color-bg-primary);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    margin-right: -50%;
+    width: 500px;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: fixed;
+    inset: 0px;
+    background-color: var(--bg-transparent);
+}

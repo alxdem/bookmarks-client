@@ -5,6 +5,7 @@ import { useContext, useEffect } from 'react';
 import { DataContext } from '@context/DataContext';
 import useGetCategories from '@hooks/useGetCategories';
 import useGetBookmarks from '@hooks/useGetBookmarks';
+import Modals from '@layouts/Modals/Modals';
 
 const MainLayout = ({ children }: ILayout) => {
     const userId = '673b3e623f2c79dde1aa2e4d';
@@ -31,6 +32,7 @@ const MainLayout = ({ children }: ILayout) => {
             <section className={styles.inner}>
                 {children}
             </section>
+            <Modals />
         </div>
     );
 };

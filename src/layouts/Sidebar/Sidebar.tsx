@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import Nav from '@components/Nav/Nav';
 import { DataContext } from '@context/DataContext';
+import { ServiceContext } from '@context/ServiceContext';
 import styles from '@layouts/Sidebar/Sidebar.module.css';
 import { SidebarProps } from '@layouts/Sidebar/Sidebar.props';
 import cn from 'classnames';
@@ -8,6 +9,7 @@ import Button from '@/components/Button/Button';
 
 const Sidebar = ({ className }: SidebarProps) => {
     const { setToken } = useContext(DataContext) || {};
+    const { setModalOpen } = useContext(ServiceContext);
 
     if (!setToken) {
         throw Error('Метод setToken не найден в контексте');
@@ -25,6 +27,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             <Button
                 className={styles.buttonCreate}
                 size='sm'
+                onClick={() => setModalOpen(true, 'category')}
             >
                 Создать категорию
             </Button>
