@@ -7,6 +7,7 @@ export interface Category {
     title: string;
     description: string;
     order: number;
+    userId: string;
 }
 
 export interface Bookmark {

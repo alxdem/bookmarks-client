@@ -19,6 +19,7 @@ interface ContextProps {
     setCategories: (value: Category[]) => void;
     setBookmarks: (value: Bookmark[]) => void;
     setToken: (value: TokenType) => void;
+    addCategory: (value: Category) => void;
 }
 
 const initialDataObject: DataObjectProps = {
@@ -45,6 +46,16 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         setDataContext(state => ({
             ...state,
             categories: [...categories],
+        }));
+    };
+
+    const addCategory = (category: Category) => {
+        const copyArray = dataContext.categories || [];
+        copyArray.push(category);
+
+        setDataContext(state => ({
+            ...state,
+            categories: [...copyArray],
         }));
     };
 
@@ -76,6 +87,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             setCategories,
             setBookmarks,
             setToken,
+            addCategory,
         }}>
             {children}
         </DataContext.Provider>

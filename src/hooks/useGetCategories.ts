@@ -12,8 +12,6 @@ const useGetCategories: useGetCategoriesProps = (userId) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const STORAGE_KEY = 'categories';
-
     const { token } = useContext(DataContext) || {};
 
     if (!userId) {
@@ -25,15 +23,6 @@ const useGetCategories: useGetCategoriesProps = (userId) => {
 
         const fetchData = async () => {
             try {
-                const localJson = localStorage.getItem(STORAGE_KEY);
-                const localData = localJson ? JSON.parse(localJson) : null;
-
-                if (localData) {
-                    setData(localData);
-                    setError('');
-                    return;
-                }
-
                 const res = await fetch(urlWithParams, {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -48,7 +37,6 @@ const useGetCategories: useGetCategoriesProps = (userId) => {
 
                 setData(dataJson);
                 setError('');
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataJson));
             } catch (error: unknown) {
                 if (typeof error === 'string') {
                     setError(error);

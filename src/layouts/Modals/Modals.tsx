@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { ServiceContext } from '@context/ServiceContext';
 import XIcon from '@assets/svg/x.svg?react';
 import styles from '@layouts/Modals/Modals.module.css';
+import FormCategoryCreate from '@components/FormCategoryCreate/FormCategoryCreate';
 
 Modal.setAppElement('#root');
 
@@ -20,7 +21,7 @@ const Modals = () => {
             overlayClassName={styles.overlay}
             onRequestClose={close}
         >
-            {modalType === 'category' && <div>123243254</div>}
+            {modalType === 'category' && <FormCategoryCreate />}
             {modalType === 'bookmark' && <div>ttrtewrtwet</div>}
 
             <button className={styles.close} onClick={close}>
