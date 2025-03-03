@@ -6,12 +6,12 @@ const Button = ({
     children,
     className,
     isDisabled,
-    type = 'default',
+    shape = 'default',
     size = 'md',
     color = 'primary',
     ...rest
 }: ButtonProps) => {
-    const classes = cn(styles.button, styles[type], styles[size], styles[color], className);
+    const classes = cn(styles.button, styles[shape], styles[size], styles[color], className);
 
     return (
         <button

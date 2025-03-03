@@ -1,7 +1,7 @@
-export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: JSX.Element | JSX.Element[] | string;
     isDisabled?: boolean;
-    type?: 'default' | 'square';
+    shape?: 'default' | 'square';
     size?: 'sm' | 'md';
-    color?: 'primary' | 'secondary';
+    color?: 'primary' | 'secondary' | 'danger';
 }

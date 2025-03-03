@@ -3,4 +3,5 @@ export interface FieldProps extends React.HTMLAttributes<HTMLInputElement> {
     error?: string;
     className?: string;
     type?: string;
+    value?: string;
 }

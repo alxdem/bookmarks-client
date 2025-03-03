@@ -1,0 +1,43 @@
+.form {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.formElement {
+    opacity: 1;
+}
+
+.field {
+    width: 100%;
+}
+
+.button {
+    margin-top: 16px;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.loading .formElement {
+    opacity: 0.6;
+    transition: opacity ease-out 0.2s;
+    pointer-events: none;
+}
+
+.loader {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: var(--color-primary-950);
+    pointer-events: none;
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 0;
+}
+
+.loading .loader {
+    opacity: 1;
+    transition: opacity ease-out 0.2s;
+}

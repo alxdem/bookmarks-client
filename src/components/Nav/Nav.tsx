@@ -2,10 +2,14 @@ import styles from '@components/Nav/Nav.module.css';
 import { useContext } from 'react';
 import cn from 'classnames';
 import { DataContext } from '@context/DataContext';
+import { ServiceContext } from '@context/ServiceContext';
 import { NavProps } from '@components/Nav/Nav.props';
+import Button from '@components/Button/Button';
+import EditIcon from '@assets/svg/edit.svg?react';
 
 const Nav = ({ className }: NavProps) => {
     const { activeCategory, categories, setActiveCategory } = useContext(DataContext) || {};
+    const { setModalOpen } = useContext(ServiceContext);
 
     if (!activeCategory || !categories || !setActiveCategory) {
         // TODO: Add loader element
@@ -18,19 +22,35 @@ const Nav = ({ className }: NavProps) => {
         setActiveCategory(id);
     };
 
+    const edit = (id: string) => {
+        setModalOpen('categoryUpdate', id);
+    };
+
     const elements = categories ? categories.map(item => {
         const activeClass = item._id === activeCategory ? styles.linkActive : null;
 
         return (
-            <a
+            <div
                 key={item._id}
-                className={cn(styles.link, activeClass)}
-                onClick={() => change(item._id)}
+                className={styles.item}
             >
-                {item.title}
-            </a>
+                <a
+                    className={cn(styles.link, activeClass)}
+                    onClick={() => change(item._id)}
+                >
+                    {item.title}
+                </a>
+                <Button
+                    className={cn(styles.button)}
+                    onClick={() => edit(item._id)}
+                    shape='square'
+                >
+                    <EditIcon />
+                </Button>
+            </div>
         );
     }) : [];
+
     return (
         <nav className={cn(styles.nav, className)}>
             {elements}

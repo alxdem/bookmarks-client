@@ -5,7 +5,7 @@
     border-radius: 4px;
     border: none;
     cursor: pointer;
-    transition: background-color ease-in 0.2s;
+    transition: background-color var(--tt-function) var(--duration-md);
 }
 
 .button:disabled:hover,
@@ -57,4 +57,15 @@
 .button.secondary:hover {
     background-color: var(--color-secondary-200);
     color: var(--color-secondary-950);
+}
+
+.button.danger {
+    background-color: var(--color-error-100);
+    color: var(--color-secondary-700);
+    border: 1px solid var(--color-error-700);
+}
+
+.button.danger:hover {
+    background-color: var(--color-error-700);
+    color: var(--color-white);
 }

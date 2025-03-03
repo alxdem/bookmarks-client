@@ -44,14 +44,14 @@ const Card = ({
                 <Button
                     className={cn(styles.button, styles.edit)}
                     onClick={remove}
-                    type='square'
+                    shape='square'
                 >
                     <EditIcon />
                 </Button>
                 <Button
                     className={cn(styles.button, styles.remove)}
                     onClick={remove}
-                    type='square'
+                    shape='square'
                 >
                     <XIcon />
                 </Button>

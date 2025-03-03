@@ -3,16 +3,43 @@ import { useContext } from 'react';
 import { ServiceContext } from '@context/ServiceContext';
 import XIcon from '@assets/svg/x.svg?react';
 import styles from '@layouts/Modals/Modals.module.css';
-import FormCategoryCreate from '@components/FormCategoryCreate/FormCategoryCreate';
+import FormCategory from '@/components/FormCategory/FormCategory';
+import { isCategoryType } from '@t/commonTypes';
+import FormConfirm from '@components/FormConfirm/FormConfirm';
+import useDeleteCategory from '@hooks/useDeleteCategory';
 
 Modal.setAppElement('#root');
 
 const Modals = () => {
-    const { isModalOpen = false, setModalClose, modalType } = useContext(ServiceContext) || {};
+    const {
+        isModalOpen = false,
+        confirmFormText,
+        modalType,
+        itemId,
+        setModalClose,
+        setModalOpen,
+        setConfirmFormText,
+    } = useContext(ServiceContext) || {};
+    const [deleteCategory, isLoading] = useDeleteCategory();
 
     const close = () => {
         setModalClose();
     };
+
+    const confirmRemoving = (id: string) => {
+        setConfirmFormText('Удалить категорию?');
+        setModalOpen('confirm', id);
+    }
+
+    const removeCategory = async () => {
+        const res = await deleteCategory(itemId);
+
+        if (!res?._id) {
+            return;
+        }
+
+        setModalClose();
+    }
 
     return (
         <Modal
@@ -21,8 +48,21 @@ const Modals = () => {
             overlayClassName={styles.overlay}
             onRequestClose={close}
         >
-            {modalType === 'category' && <FormCategoryCreate />}
+            {isCategoryType(modalType)
+                && <FormCategory
+                    type={modalType}
+                    id={itemId}
+                    remove={confirmRemoving}
+                />
+            }
             {modalType === 'bookmark' && <div>ttrtewrtwet</div>}
+            {modalType === 'confirm'
+                && <FormConfirm
+                    text={confirmFormText}
+                    isLoading={isLoading}
+                    reject={close}
+                    confirm={removeCategory}
+                />}
 
             <button className={styles.close} onClick={close}>
                 <XIcon />

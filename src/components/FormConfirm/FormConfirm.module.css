@@ -1,22 +1,14 @@
 .form {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
 
-.formElement {
-    opacity: 1;
-}
-
-.button {
-    margin-top: 16px;
-}
-
-.loading .formElement {
-    opacity: 0.6;
-    transition: opacity ease-out 0.2s;
-    pointer-events: none;
+.text {
+    grid-column: 1 / 3;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.2;
 }
 
 .loader {

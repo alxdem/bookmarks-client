@@ -2,6 +2,25 @@
     border-top: 1px solid var(--color-secondary_300);
 }
 
+.item {
+    position: relative;
+    overflow: hidden;
+}
+
+.item .button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%) translateX(50px);
+    transition: 
+        transform var(--tt-function) var(--duration-md),
+        background-color var(--tt-function) var(--duration-md);
+}
+
+.item:hover .button {
+    transform: translateY(-50%) translateX(0px);
+}
+
 .link {
     display: flex;
     padding: 10px;

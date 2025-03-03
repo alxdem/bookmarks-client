@@ -27,7 +27,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             <Button
                 className={styles.buttonCreate}
                 size='sm'
-                onClick={() => setModalOpen(true, 'category')}
+                onClick={() => setModalOpen('categoryCreate')}
             >
                 Создать категорию
             </Button>

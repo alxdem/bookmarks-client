@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Bookmark, Category } from '@t/commonTypes';
+import { Bookmark, Category, CategoryEdit } from '@t/commonTypes';
 
 type TokenType = string | null;
 
@@ -20,6 +20,8 @@ interface ContextProps {
     setBookmarks: (value: Bookmark[]) => void;
     setToken: (value: TokenType) => void;
     addCategory: (value: Category) => void;
+    removeCategory: (id: string) => void;
+    updateCategory: (props: CategoryEdit) => void;
 }
 
 const initialDataObject: DataObjectProps = {
@@ -59,6 +61,27 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         }));
     };
 
+    const removeCategory = (id: string) => {
+        const copyArray = dataContext.categories || [];
+        const newArray = copyArray.filter(category => category._id !== id);
+
+        setDataContext(state => ({
+            ...state,
+            categories: [...newArray],
+        }));
+    };
+
+    const updateCategory = ({ _id, title, description }: CategoryEdit) => {
+        setDataContext(state => ({
+            ...state,
+            categories: state.categories.map(category =>
+                category._id === _id
+                    ? { ...category, title, description }
+                    : category
+            ),
+        }));
+    };
+
     const setBookmarks = (bookmarks: Bookmark[]) => {
         setDataContext(state => ({
             ...state,
@@ -88,6 +111,8 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             setBookmarks,
             setToken,
             addCategory,
+            removeCategory,
+            updateCategory,
         }}>
             {children}
         </DataContext.Provider>
