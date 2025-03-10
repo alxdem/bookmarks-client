@@ -1,9 +1,13 @@
 import styles from '@components/CardList/CardList.module.css';
 import useActiveBookmarks from '@hooks/useActiveBookmarks';
 import Card from '@components/Card/Card';
+import PlusIcon from '@assets/svg/plus-1.svg?react';
+import { ServiceContext } from '@context/ServiceContext';
+import { useContext } from 'react';
 
 const CardList = (): JSX.Element => {
     const items = useActiveBookmarks();
+    const { setModalOpen } = useContext(ServiceContext);
 
     const elements = items.map(item => (
         <Card
@@ -16,12 +20,23 @@ const CardList = (): JSX.Element => {
             order={item.order}
             image={item.image}
         />
-    ))
+    ));
+
+    const btnPlusClick = () => {
+        setModalOpen('bookmark');
+    };
 
     return (
         <section className={styles.cardList}>
             <div className={styles.inner}>
                 {elements}
+                <button
+                    className={styles.button}
+                    type='button'
+                    onClick={btnPlusClick}
+                >
+                    <PlusIcon />
+                </button>
             </div>
         </section>
     );

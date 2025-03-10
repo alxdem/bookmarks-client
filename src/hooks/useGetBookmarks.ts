@@ -11,8 +11,6 @@ const useGetBookmarks: useGetBookmarksProps = (userId) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const STORAGE_KEY = 'bookmarks';
-
     if (!userId) {
         throw Error(message.USER_ID_NOT_FOUND);
     }
@@ -22,15 +20,6 @@ const useGetBookmarks: useGetBookmarksProps = (userId) => {
 
         const fetchData = async () => {
             try {
-                const localJson = localStorage.getItem(STORAGE_KEY);
-                const localData = localJson ? JSON.parse(localJson) : null;
-
-                if (localData && localData.length) {
-                    setData(localData);
-                    setError('');
-                    return;
-                }
-
                 const res = await fetch(urlWithParams);
 
                 if (!res.ok) {
@@ -41,7 +30,6 @@ const useGetBookmarks: useGetBookmarksProps = (userId) => {
 
                 setData(dataJson);
                 setError('');
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataJson));
             } catch (error: unknown) {
                 if (typeof error === 'string') {
                     setError(error);

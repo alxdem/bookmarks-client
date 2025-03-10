@@ -7,6 +7,7 @@ import FormCategory from '@/components/FormCategory/FormCategory';
 import { isCategoryType } from '@t/commonTypes';
 import FormConfirm from '@components/FormConfirm/FormConfirm';
 import useDeleteCategory from '@hooks/useDeleteCategory';
+import FormBookmark from '@components/FormBookmark/FormBookmark';
 
 Modal.setAppElement('#root');
 
@@ -55,7 +56,7 @@ const Modals = () => {
                     remove={confirmRemoving}
                 />
             }
-            {modalType === 'bookmark' && <div>ttrtewrtwet</div>}
+            {modalType === 'bookmark' && <FormBookmark />}
             {modalType === 'confirm'
                 && <FormConfirm
                     text={confirmFormText}

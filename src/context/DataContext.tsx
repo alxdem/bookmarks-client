@@ -22,6 +22,7 @@ interface ContextProps {
     addCategory: (value: Category) => void;
     removeCategory: (id: string) => void;
     updateCategory: (props: CategoryEdit) => void;
+    addBookmark: (value: Bookmark) => void;
 }
 
 const initialDataObject: DataObjectProps = {
@@ -89,6 +90,16 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         }));
     };
 
+    const addBookmark = (bookmark: Bookmark) => {
+        const copyArray = dataContext.bookmarks || [];
+        copyArray.push(bookmark);
+
+        setDataContext(state => ({
+            ...state,
+            bookmarks: [...copyArray],
+        }));
+    };
+
     const setToken = (token: TokenType) => {
         setDataContext(state => ({
             ...state,
@@ -113,6 +124,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             addCategory,
             removeCategory,
             updateCategory,
+            addBookmark,
         }}>
             {children}
         </DataContext.Provider>

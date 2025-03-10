@@ -47,3 +47,5 @@ export const isCategoryType = (type: modalType): type is modalTypeCategory => {
 
 export type CategoryEdit = Pick<Category, '_id' | 'title' | 'description'>;
 export type CategoryEditOrCreate = CategoryCreateFormProps | CategoryEdit;
+export type BookmarkCreate = Omit<Bookmark, '_id'>;
+export type BookmarkEditOrCreate = BookmarkCreate | Bookmark;

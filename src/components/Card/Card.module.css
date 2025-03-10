@@ -4,6 +4,7 @@
     max-width: 100%;
     overflow: hidden;
     background-color: var(--color-white);
+    transition: box-shadow var(--tt-function) var(--duration-md);
     box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0px 0px,
         rgba(94, 93, 102, 0.1) 2px 2px 3px 0px;
 }

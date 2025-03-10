@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from '@components/Field/Field.module.css';
-import { FieldProps } from '@components/Field/Field.props';
+import { FieldProps, InputOrTextarea } from '@components/Field/Field.props';
 import cn from 'classnames';
 
-const Field = React.forwardRef<HTMLInputElement, FieldProps>(({
+const Field = React.forwardRef<InputOrTextarea, FieldProps>(({
     label,
     error,
     className,
-    type,
+    type = 'text',
     value = '',
-    onChange
+    onChange,
+    ...props
 }, ref) => {
     const classes = cn(
         styles.field,
@@ -19,18 +20,27 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(({
 
     if (!onChange) return null;
 
-    const fieldType = type || 'text';
-
     return (
         <label className={classes}>
             <span className={styles.label}>{label}</span>
-            <input
-                type={fieldType}
-                className={styles.input}
-                value={value}
-                onChange={(value) => onChange(value)}
-                ref={ref}
-            />
+            {type === 'textarea' ? (
+                <textarea
+                    className={cn(styles.defaultInput, styles.textarea)}
+                    value={value}
+                    onChange={(value) => onChange(value)}
+                    ref={ref as React.Ref<HTMLTextAreaElement>}
+                    {...props}
+                />
+            ) : (
+                <input
+                    type={type}
+                    className={cn(styles.defaultInput, styles.input)}
+                    value={value}
+                    onChange={(value) => onChange(value)}
+                    ref={ref as React.Ref<HTMLInputElement>}
+                    {...props}
+                />
+            )}
             {error && <span className={styles.error}>{error}</span>}
         </label>
     );

@@ -36,4 +36,11 @@
     --duration-md: 0.15s;
 
     --tt-function: ease-in;
+
+    --ff-default: Inter,
+        system-ui,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
 }

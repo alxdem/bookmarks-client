@@ -5,9 +5,7 @@
     align-items: flex-start;
 }
 
-.input {
-    height: 52px;
-    padding: 2px 16px;
+.defaultInput {
     box-sizing: border-box;
     border-radius: 4px;
     outline: none;
@@ -16,14 +14,26 @@
     background-color: var(--color-primary-100);
     font-size: 16px;
     color: var(--color-secondary-950);
+    font-family: var(--ff-default);
 }
 
-.input:focus {
+.defaultInput:focus {
     background-color: var(--color-primary-200);
 }
 
-.isError .input {
+.isError .defaultInput {
     background-color: var(--color-error-100);
+}
+
+.input {
+    height: 52px;
+    padding: 2px 16px;
+}
+
+.textarea {
+    height: 120px;
+    padding: 16px;
+    resize: none;
 }
 
 .error {
