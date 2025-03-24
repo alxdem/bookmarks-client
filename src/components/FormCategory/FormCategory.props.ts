@@ -1,8 +1,8 @@
-import { modalTypeCategory } from '@t/commonTypes';
+import { ModalTypeCategory } from '@t/commonTypes';
 import { Category } from '@t/commonTypes';
 
 export interface FormCategoryProps {
-    type: modalTypeCategory;
+    type: ModalTypeCategory;
     id?: string;
     remove: (id: string) => void;
 }

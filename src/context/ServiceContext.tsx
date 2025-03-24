@@ -1,21 +1,21 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { modalType } from '@t/commonTypes';
+import { ModalType } from '@t/commonTypes';
 
 interface ServiceObjectProps {
     isModalOpen: boolean;
-    modalType: modalType;
+    ModalType: ModalType;
     itemId?: string;
     confirmFormText?: string;
 }
 
 const initialServiceObject: ServiceObjectProps = {
     isModalOpen: false,
-    modalType: 'categoryCreate',
+    ModalType: 'categoryCreate',
     confirmFormText: '',
 }
 
 interface ContextProps extends ServiceObjectProps {
-    setModalOpen: (type: modalType, id?: string) => void;
+    setModalOpen: (type: ModalType, id?: string) => void;
     setModalClose: () => void;
     setConfirmFormText: (value: string) => void;
 };
@@ -30,10 +30,10 @@ export const ServiceContext = createContext<ContextProps>({
 export const ServiceProvider: FC<PropsWithChildren> = ({ children }) => {
     const [serviceContext, setServiceContext] = useState<ServiceObjectProps>(initialServiceObject);
 
-    const setModalOpen = (type: modalType, id?: string) => {
+    const setModalOpen = (type: ModalType, id?: string) => {
         setServiceContext(state => ({
             ...state,
-            modalType: type,
+            ModalType: type,
             isModalOpen: true,
             itemId: id,
         }));

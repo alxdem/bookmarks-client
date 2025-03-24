@@ -15,7 +15,7 @@ function useCreateBookmark() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { activeCategory, token, addBookmark } = useContext(DataContext) || {};
+    const { activeCategoryId, token, addBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
     const createBookmark = async (payload: BookmarkCreate) => {
@@ -31,7 +31,7 @@ function useCreateBookmark() {
                 body: JSON.stringify({
                     ...payload,
                     userId,
-                    categoryId: activeCategory,
+                    categoryId: activeCategoryId,
                 }),
             });
             const data: Bookmark = await res.json();

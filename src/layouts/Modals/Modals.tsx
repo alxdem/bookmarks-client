@@ -15,7 +15,7 @@ const Modals = () => {
     const {
         isModalOpen = false,
         confirmFormText,
-        modalType,
+        ModalType,
         itemId,
         setModalClose,
         setModalOpen,
@@ -49,15 +49,15 @@ const Modals = () => {
             overlayClassName={styles.overlay}
             onRequestClose={close}
         >
-            {isCategoryType(modalType)
+            {isCategoryType(ModalType)
                 && <FormCategory
-                    type={modalType}
+                    type={ModalType}
                     id={itemId}
                     remove={confirmRemoving}
                 />
             }
-            {modalType === 'bookmark' && <FormBookmark />}
-            {modalType === 'confirm'
+            {ModalType === 'bookmark' && <FormBookmark />}
+            {ModalType === 'confirm'
                 && <FormConfirm
                     text={confirmFormText}
                     isLoading={isLoading}

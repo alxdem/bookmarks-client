@@ -9,14 +9,14 @@ import Modals from '@layouts/Modals/Modals';
 
 const MainLayout = ({ children }: ILayout) => {
     const userId = '673b3e623f2c79dde1aa2e4d';
-    const { setActiveCategory, setCategories, setBookmarks } = useContext(DataContext) || {};
+    const { setActiveCategoryId, setCategories, setBookmarks } = useContext(DataContext) || {};
     const [categoriesData] = useGetCategories(userId);
     const [bookmarksData] = useGetBookmarks(userId);
 
     useEffect(() => {
-        if (categoriesData.length && setCategories && setActiveCategory) {
+        if (categoriesData.length && setCategories && setActiveCategoryId) {
             setCategories(categoriesData);
-            setActiveCategory(categoriesData[0]._id);
+            setActiveCategoryId(categoriesData[0]._id);
         }
     }, [categoriesData]);
 

@@ -1,21 +1,24 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Bookmark, Category, CategoryEdit } from '@t/commonTypes';
+import { Bookmark, Category, CategoryEdit, SelectOption } from '@t/commonTypes';
+import { createOptionsFromCategories } from '@utils/methods';
 
 type TokenType = string | null;
 
 interface DataObjectProps {
     categories: Category[];
-    activeCategory: string;
+    categoriesForSelect: SelectOption[];
+    activeCategoryId: string;
     bookmarks: Bookmark[];
     token: TokenType;
 }
 
 interface ContextProps {
     categories: Category[];
-    activeCategory: string;
+    activeCategoryId: string;
+    categoriesForSelect: SelectOption[];
     bookmarks: Bookmark[];
     token: TokenType;
-    setActiveCategory: (value: string) => void;
+    setActiveCategoryId: (value: string) => void;
     setCategories: (value: Category[]) => void;
     setBookmarks: (value: Bookmark[]) => void;
     setToken: (value: TokenType) => void;
@@ -27,7 +30,8 @@ interface ContextProps {
 
 const initialDataObject: DataObjectProps = {
     categories: [],
-    activeCategory: '',
+    categoriesForSelect: [],
+    activeCategoryId: '',
     bookmarks: [],
     token: null,
 };
@@ -38,10 +42,10 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     const [dataContext, setDataContext] = useState<DataObjectProps>(initialDataObject);
     const tokenLocal = localStorage.getItem('token');
 
-    const setActiveCategory = (activeCategory: string) => {
+    const setActiveCategoryId = (activeCategoryId: string) => {
         setDataContext(state => ({
             ...state,
-            activeCategory,
+            activeCategoryId,
         }));
     };
 
@@ -49,6 +53,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         setDataContext(state => ({
             ...state,
             categories: [...categories],
+            categoriesForSelect: createOptionsFromCategories(categories),
         }));
     };
 
@@ -59,6 +64,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         setDataContext(state => ({
             ...state,
             categories: [...copyArray],
+            categoriesForSelect: createOptionsFromCategories(copyArray),
         }));
     };
 
@@ -69,17 +75,20 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         setDataContext(state => ({
             ...state,
             categories: [...newArray],
+            categoriesForSelect: createOptionsFromCategories(newArray),
         }));
     };
 
     const updateCategory = ({ _id, title, description }: CategoryEdit) => {
+        const newArray = dataContext.categories.map(category =>
+            category._id === _id
+                ? { ...category, title, description }
+                : category
+        );
         setDataContext(state => ({
             ...state,
-            categories: state.categories.map(category =>
-                category._id === _id
-                    ? { ...category, title, description }
-                    : category
-            ),
+            categories: newArray,
+            categoriesForSelect: createOptionsFromCategories(newArray),
         }));
     };
 
@@ -114,10 +123,11 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <DataContext.Provider value={{
             categories: dataContext.categories,
-            activeCategory: dataContext.activeCategory,
+            activeCategoryId: dataContext.activeCategoryId,
+            categoriesForSelect: dataContext.categoriesForSelect,
             bookmarks: dataContext.bookmarks,
             token: dataContext.token,
-            setActiveCategory,
+            setActiveCategoryId,
             setCategories,
             setBookmarks,
             setToken,

@@ -6,9 +6,12 @@ import Button from '@components/Button/Button';
 import { BookmarkEditOrCreate } from '@t/commonTypes';
 import useCreateBookmark from '@hooks/useCreateBookmark';
 import SpinnerIcon from '@assets/svg/spinner.svg?react';
+import { useContext } from 'react';
+import { DataContext } from '@context/DataContext';
 
 const FormBookmark = () => {
     const [createBookmark, isLoading] = useCreateBookmark();
+    const { activeCategoryId, categoriesForSelect } = useContext(DataContext) || {};
 
     const {
         handleSubmit,
@@ -23,6 +26,8 @@ const FormBookmark = () => {
     const onSubmit: SubmitHandler<BookmarkEditOrCreate> = async (payload) => {
         await createBookmark(payload);
     };
+
+    const activeOption = categoriesForSelect?.find(category => category.value === activeCategoryId);
 
     return (
         <form className={formClasses} onSubmit={handleSubmit(onSubmit)}>
@@ -54,6 +59,21 @@ const FormBookmark = () => {
                         label='Ссылка'
                         {...field}
                         error={error?.message}
+                        ref={field.ref}
+                    />
+                )}
+            />
+            <Controller
+                name='categoryId'
+                control={control}
+                render={({ field }) => (
+                    <Field
+                        className={cn(styles.formElement, styles.field)}
+                        label='Категория'
+                        type='select'
+                        options={categoriesForSelect}
+                        {...field}
+                        selectedValue={activeOption}
                         ref={field.ref}
                     />
                 )}

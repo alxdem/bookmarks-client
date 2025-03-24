@@ -1,0 +1,76 @@
+.container {
+    cursor: pointer !important;
+}
+
+.dropdownIndicator {
+    color: var(--color-secondary-700) !important;
+    padding: 0 !important;
+    margin: 0 auto;
+}
+
+.indicatorsContainer {
+    width: 42px;
+}
+
+.indicatorsSeparator {
+    background-color: var(--color-secondary-700) !important;
+}
+
+.input {
+    margin: 0 !important;
+}
+
+.menuPortal,
+.menu {
+    border: 0 !important;
+}
+
+.menuList {
+    background-color: var(--color-primary-100);
+    font-size: 16px;
+    color: var(--color-secondary-950);
+    border: 0 !important;
+}
+
+.optionFocused {
+    background-color: var(--color-primary-200) !important;
+    cursor: pointer !important;
+}
+
+.optionSelected {
+    background-color: var(--color-primary-500) !important;
+}
+
+.valueContainer {
+    margin: 0 !important;
+    padding: 2px 16px !important;
+    height: 100% !important;
+}
+
+.control {
+    height: 52px;
+    align-items: stretch;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+    width: 100%;
+    border: none !important;
+    background-color: var(--color-primary-100) !important;
+}
+
+.controlFocused {
+    background-color: var(--color-primary-200) !important;
+    outline: none;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.singleValue {
+    font-size: 16px !important;
+    color: var(--color-secondary-950);
+    font-family: var(--ff-default);
+    margin: 0 !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

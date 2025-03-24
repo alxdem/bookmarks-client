@@ -3,16 +3,16 @@ import { DataContext } from '@context/DataContext';
 import { Bookmark } from '@t/commonTypes';
 
 function useActiveBookmarks() {
-    const { activeCategory, bookmarks } = useContext(DataContext) || {};
+    const { activeCategoryId, bookmarks } = useContext(DataContext) || {};
     const [data, setData] = useState<Bookmark[]>([]);
 
     useEffect(() => {
         if (!bookmarks) return;
 
-        const activeBookmarks = bookmarks.filter(item => item.categoryId === activeCategory);
+        const activeBookmarks = bookmarks.filter(item => item.categoryId === activeCategoryId);
         setData(activeBookmarks);
 
-    }, [bookmarks, activeCategory]);
+    }, [bookmarks, activeCategoryId]);
 
     return data;
 }

@@ -1,9 +1,9 @@
 import { CategoryCreateFormProps } from '@components/FormCategory/FormCategory.props';
 
 export type CrudMethod = 'GET' | 'POST' | 'PATCH' | 'DEL';
-export type modalTypeCategory = 'categoryCreate' | 'categoryUpdate';
-export type modalTypeBookmark = 'bookmark';
-export type modalType = modalTypeCategory | modalTypeBookmark | 'confirm';
+export type ModalTypeCategory = 'categoryCreate' | 'categoryUpdate';
+export type ModalTypeBookmark = 'bookmark';
+export type ModalType = ModalTypeCategory | ModalTypeBookmark | 'confirm';
 
 export interface ILayout {
     children: string | JSX.Element | JSX.Element[];
@@ -41,9 +41,14 @@ export interface SetCatchError {
     ): void;
 }
 
-export const isCategoryType = (type: modalType): type is modalTypeCategory => {
+export const isCategoryType = (type: ModalType): type is ModalTypeCategory => {
     return type === 'categoryCreate' || type === 'categoryUpdate';
 };
+
+export interface SelectOption {
+    value: string;
+    label: string;
+}
 
 export type CategoryEdit = Pick<Category, '_id' | 'title' | 'description'>;
 export type CategoryEditOrCreate = CategoryCreateFormProps | CategoryEdit;

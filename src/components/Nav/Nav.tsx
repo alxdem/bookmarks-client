@@ -8,10 +8,10 @@ import Button from '@components/Button/Button';
 import EditIcon from '@assets/svg/edit.svg?react';
 
 const Nav = ({ className }: NavProps) => {
-    const { activeCategory, categories, setActiveCategory } = useContext(DataContext) || {};
+    const { activeCategoryId, categories, setActiveCategoryId } = useContext(DataContext) || {};
     const { setModalOpen } = useContext(ServiceContext);
 
-    if (!activeCategory || !categories || !setActiveCategory) {
+    if (!activeCategoryId || !categories || !setActiveCategoryId) {
         // TODO: Add loader element
         return (
             <p>Context not found</p>
@@ -19,7 +19,7 @@ const Nav = ({ className }: NavProps) => {
     }
 
     const change = (id: string) => {
-        setActiveCategory(id);
+        setActiveCategoryId(id);
     };
 
     const edit = (id: string) => {
@@ -27,7 +27,7 @@ const Nav = ({ className }: NavProps) => {
     };
 
     const elements = categories ? categories.map(item => {
-        const activeClass = item._id === activeCategory ? styles.linkActive : null;
+        const activeClass = item._id === activeCategoryId ? styles.linkActive : null;
 
         return (
             <div
