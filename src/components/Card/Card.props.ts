@@ -6,4 +6,5 @@ export interface CardProps {
     categoryId?: string;
     order?: number;
     image?: string;
+    onRemove: () => void;
 } 

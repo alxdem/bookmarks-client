@@ -24,6 +24,7 @@ interface ContextProps {
     setToken: (value: TokenType) => void;
     addCategory: (value: Category) => void;
     removeCategory: (id: string) => void;
+    removeBookmark: (id: string) => void;
     updateCategory: (props: CategoryEdit) => void;
     addBookmark: (value: Bookmark) => void;
 }
@@ -76,6 +77,16 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             ...state,
             categories: [...newArray],
             categoriesForSelect: createOptionsFromCategories(newArray),
+        }));
+    };
+
+    const removeBookmark = (id: string) => {
+        const copyArray = [...dataContext.bookmarks];
+        const newArray = copyArray.filter(bookmark => bookmark._id !== id);
+
+        setDataContext(state => ({
+            ...state,
+            bookmarks: newArray,
         }));
     };
 
@@ -133,6 +144,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             setToken,
             addCategory,
             removeCategory,
+            removeBookmark,
             updateCategory,
             addBookmark,
         }}>

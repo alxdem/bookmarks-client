@@ -7,7 +7,13 @@ import { useContext } from 'react';
 
 const CardList = (): JSX.Element => {
     const items = useActiveBookmarks();
-    const { setModalOpen } = useContext(ServiceContext);
+    const { setModalOpen, setConfirmFormText, setCurrentEntity } = useContext(ServiceContext);
+
+    const removeBookmark = (id: string) => {
+        setConfirmFormText('Удалить закладку?');
+        setCurrentEntity('bookmark');
+        setModalOpen('confirm', id);
+    };
 
     const elements = items.map(item => (
         <Card
@@ -19,6 +25,7 @@ const CardList = (): JSX.Element => {
             categoryId={item.categoryId}
             order={item.order}
             image={item.image}
+            onRemove={() => removeBookmark(item._id)}
         />
     ));
 

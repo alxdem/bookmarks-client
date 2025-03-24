@@ -8,6 +8,7 @@ import { isCategoryType } from '@t/commonTypes';
 import FormConfirm from '@components/FormConfirm/FormConfirm';
 import useDeleteCategory from '@hooks/useDeleteCategory';
 import FormBookmark from '@components/FormBookmark/FormBookmark';
+import useDeleteBookmark from '@hooks/useDeleteBookmark';
 
 Modal.setAppElement('#root');
 
@@ -15,20 +16,24 @@ const Modals = () => {
     const {
         isModalOpen = false,
         confirmFormText,
-        ModalType,
+        currentEntity,
+        modalType,
         itemId,
         setModalClose,
         setModalOpen,
         setConfirmFormText,
+        setCurrentEntity,
     } = useContext(ServiceContext) || {};
-    const [deleteCategory, isLoading] = useDeleteCategory();
+    const [deleteCategory, isCategoryLoading] = useDeleteCategory();
+    const [deleteBookmark, isBookmarkLoading] = useDeleteBookmark();
 
     const close = () => {
         setModalClose();
     };
 
-    const confirmRemoving = (id: string) => {
+    const confirmCategoryRemoving = (id: string) => {
         setConfirmFormText('Удалить категорию?');
+        setCurrentEntity('category');
         setModalOpen('confirm', id);
     }
 
@@ -42,6 +47,29 @@ const Modals = () => {
         setModalClose();
     }
 
+    const removeBookmark = async () => {
+        const res = await deleteBookmark(itemId);
+
+        if (!res?._id) {
+            return;
+        }
+
+        setModalClose();
+    };
+
+    const confirm = () => {
+        console.log('currentEntity', currentEntity);
+        switch (currentEntity) {
+            case 'category':
+                removeCategory();
+                break;
+            case 'bookmark':
+                removeBookmark();
+                break;
+            default:
+        }
+    }
+
     return (
         <Modal
             isOpen={isModalOpen}
@@ -49,20 +77,20 @@ const Modals = () => {
             overlayClassName={styles.overlay}
             onRequestClose={close}
         >
-            {isCategoryType(ModalType)
+            {isCategoryType(modalType)
                 && <FormCategory
-                    type={ModalType}
+                    type={modalType}
                     id={itemId}
-                    remove={confirmRemoving}
+                    remove={confirmCategoryRemoving}
                 />
             }
-            {ModalType === 'bookmark' && <FormBookmark />}
-            {ModalType === 'confirm'
+            {modalType === 'bookmark' && <FormBookmark />}
+            {modalType === 'confirm'
                 && <FormConfirm
                     text={confirmFormText}
-                    isLoading={isLoading}
+                    isLoading={isCategoryLoading || isBookmarkLoading}
                     reject={close}
-                    confirm={removeCategory}
+                    confirm={confirm}
                 />}
 
             <button className={styles.close} onClick={close}>

@@ -13,6 +13,7 @@ const Card = ({
     categoryId,
     order,
     image,
+    onRemove,
 }: CardProps): JSX.Element => {
     const remove = () => {
         console.log('remove', userId);
@@ -50,7 +51,7 @@ const Card = ({
                 </Button>
                 <Button
                     className={cn(styles.button, styles.remove)}
-                    onClick={remove}
+                    onClick={onRemove}
                     shape='square'
                 >
                     <XIcon />

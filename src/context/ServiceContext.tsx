@@ -1,16 +1,17 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { ModalType } from '@t/commonTypes';
+import { EntityType, ModalType } from '@t/commonTypes';
 
 interface ServiceObjectProps {
     isModalOpen: boolean;
-    ModalType: ModalType;
+    modalType: ModalType;
     itemId?: string;
     confirmFormText?: string;
+    currentEntity?: EntityType;
 }
 
 const initialServiceObject: ServiceObjectProps = {
     isModalOpen: false,
-    ModalType: 'categoryCreate',
+    modalType: 'categoryCreate',
     confirmFormText: '',
 }
 
@@ -18,6 +19,7 @@ interface ContextProps extends ServiceObjectProps {
     setModalOpen: (type: ModalType, id?: string) => void;
     setModalClose: () => void;
     setConfirmFormText: (value: string) => void;
+    setCurrentEntity: (value: EntityType) => void;
 };
 
 export const ServiceContext = createContext<ContextProps>({
@@ -25,6 +27,7 @@ export const ServiceContext = createContext<ContextProps>({
     setModalOpen: () => { },
     setModalClose: () => { },
     setConfirmFormText: () => { },
+    setCurrentEntity: () => { },
 });
 
 export const ServiceProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -33,7 +36,7 @@ export const ServiceProvider: FC<PropsWithChildren> = ({ children }) => {
     const setModalOpen = (type: ModalType, id?: string) => {
         setServiceContext(state => ({
             ...state,
-            ModalType: type,
+            modalType: type,
             isModalOpen: true,
             itemId: id,
         }));
@@ -43,6 +46,7 @@ export const ServiceProvider: FC<PropsWithChildren> = ({ children }) => {
         setServiceContext(state => ({
             ...state,
             isModalOpen: false,
+            currentEntity: null,
         }));
     };
 
@@ -53,12 +57,20 @@ export const ServiceProvider: FC<PropsWithChildren> = ({ children }) => {
         }));
     };
 
+    const setCurrentEntity = (value: EntityType) => {
+        setServiceContext(state => ({
+            ...state,
+            currentEntity: value,
+        }));
+    }
+
     return (
         <ServiceContext.Provider value={{
             ...serviceContext,
             setModalOpen,
             setModalClose,
             setConfirmFormText,
+            setCurrentEntity,
         }}>
             {children}
         </ServiceContext.Provider>
