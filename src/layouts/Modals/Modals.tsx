@@ -58,7 +58,6 @@ const Modals = () => {
     };
 
     const confirm = () => {
-        console.log('currentEntity', currentEntity);
         switch (currentEntity) {
             case 'category':
                 removeCategory();

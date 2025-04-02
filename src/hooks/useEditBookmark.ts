@@ -6,7 +6,7 @@ import { Bookmark, BookmarkEdit } from '@t/commonTypes';
 import { setCatchError } from '@utils/methods';
 
 function useEditBookmark() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { token, updateBookmark, userId } = useContext(DataContext) || {};
 
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
@@ -15,7 +15,6 @@ function useEditBookmark() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { token, updateBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
     const editBookmark = async (payload: BookmarkEdit) => {

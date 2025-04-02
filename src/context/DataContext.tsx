@@ -3,14 +3,15 @@ import {Bookmark, BookmarkEdit, Category, CategoryEdit } from '@t/commonTypes';
 import { createOptionsFromCategories } from '@utils/methods';
 import { OptionProps } from '@components/FieldSelect/FieldSelect.props';
 
-type TokenType = string | null;
+type StringOrNull = string | null;
 
 interface DataObjectProps {
     categories: Category[];
     categoriesForSelect: OptionProps[];
     activeCategoryId: string;
     bookmarks: Bookmark[];
-    token: TokenType;
+    token: StringOrNull;
+    userId: StringOrNull;
 }
 
 interface ContextProps {
@@ -18,11 +19,13 @@ interface ContextProps {
     activeCategoryId: string;
     categoriesForSelect: OptionProps[];
     bookmarks: Bookmark[];
-    token: TokenType;
+    token: StringOrNull;
+    userId: StringOrNull;
     setActiveCategoryId: (value: string) => void;
     setCategories: (value: Category[]) => void;
     setBookmarks: (value: Bookmark[]) => void;
-    setToken: (value: TokenType) => void;
+    setToken: (value: StringOrNull) => void;
+    setUserId: (id: StringOrNull) => void;
     addCategory: (value: Category) => void;
     removeCategory: (id: string) => void;
     removeBookmark: (id: string) => void;
@@ -37,6 +40,7 @@ const initialDataObject: DataObjectProps = {
     activeCategoryId: '',
     bookmarks: [],
     token: null,
+    userId: null,
 };
 
 export const DataContext = createContext<ContextProps | null>(null);
@@ -44,6 +48,7 @@ export const DataContext = createContext<ContextProps | null>(null);
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     const [dataContext, setDataContext] = useState<DataObjectProps>(initialDataObject);
     const tokenLocal = localStorage.getItem('token');
+    const userIdLocal = localStorage.getItem('userId');
 
     const setActiveCategoryId = (activeCategoryId: string) => {
         setDataContext(state => ({
@@ -134,15 +139,26 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         }));
     };
 
-    const setToken = (token: TokenType) => {
+    const setToken = (token: StringOrNull) => {
         setDataContext(state => ({
             ...state,
             token,
         }));
     };
 
+    const setUserId = (id: StringOrNull) => {
+      setDataContext(state => ({
+          ...state,
+          userId: id,
+      }));
+    };
+
     if (tokenLocal && !dataContext.token) {
         setToken(tokenLocal);
+    }
+
+    if (userIdLocal && !dataContext.userId) {
+        setUserId(userIdLocal);
     }
 
     return (
@@ -152,10 +168,12 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             categoriesForSelect: dataContext.categoriesForSelect,
             bookmarks: dataContext.bookmarks,
             token: dataContext.token,
+            userId: dataContext.userId,
             setActiveCategoryId,
             setCategories,
             setBookmarks,
             setToken,
+            setUserId,
             addCategory,
             removeCategory,
             removeBookmark,

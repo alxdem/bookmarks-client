@@ -10,7 +10,7 @@ import cn from 'classnames';
 const AuthLayout = () => {
     const PASSWORD_MIN_LENGHT = 6;
 
-    const { setToken } = useContext(DataContext) || {};
+    const { setToken, setUserId } = useContext(DataContext) || {};
     const [formMessage, setFormMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +28,10 @@ const AuthLayout = () => {
         throw Error('Метод setToken не найден в контексте');
     }
 
+    if (!setUserId) {
+        throw Error('Метод setUserId не найден в контексте');
+    }
+
     const formClasses = cn(
         styles.form,
         { [styles.loading]: isLoading }
@@ -43,7 +47,7 @@ const AuthLayout = () => {
             body: JSON.stringify(payload),
         });
 
-        const { token, message } = await res.json();
+        const { token, message, userId } = await res.json();
 
         if (message) {
             setFormMessage(message);
@@ -57,6 +61,14 @@ const AuthLayout = () => {
         } else {
             localStorage.removeItem('token');
             setToken(null);
+        }
+
+        if (userId) {
+            localStorage.setItem('userId', userId);
+            setUserId(userId);
+        } else {
+            localStorage.removeItem('userId');
+            setUserId(null);
         }
 
         setIsLoading(false);

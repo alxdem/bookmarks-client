@@ -8,8 +8,17 @@ import useGetBookmarks from '@hooks/useGetBookmarks';
 import Modals from '@layouts/Modals/Modals';
 
 const MainLayout = ({ children }: ILayout) => {
-    const userId = '673b3e623f2c79dde1aa2e4d';
-    const { setActiveCategoryId, setCategories, setBookmarks } = useContext(DataContext) || {};
+    const {
+        userId,
+        setActiveCategoryId,
+        setCategories,
+        setBookmarks
+    } = useContext(DataContext) || {};
+
+    if (!userId) {
+        return;
+    }
+
     const [categoriesData] = useGetCategories(userId);
     const [bookmarksData] = useGetBookmarks(userId);
 

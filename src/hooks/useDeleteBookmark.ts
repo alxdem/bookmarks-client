@@ -9,15 +9,14 @@ interface DeleteBookmarkProps {
 }
 
 function useDeleteBookmark() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { removeBookmark, token, userId } = useContext(DataContext) || {};
+
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
     }
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const { removeBookmark, token } = useContext(DataContext) || {};
 
     const deleteBookmark: DeleteBookmarkProps = async (id) => {
         if (!id) {

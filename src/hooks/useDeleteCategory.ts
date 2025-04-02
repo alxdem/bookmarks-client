@@ -11,15 +11,14 @@ interface DeleteCategoryProps {
 }
 
 function useDeleteCategory() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { removeCategory, token, userId } = useContext(DataContext) || {};
+
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
     }
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const { removeCategory, token } = useContext(DataContext) || {};
 
     const deleteCategory: DeleteCategoryProps = async (categoryId) => {
         if (!categoryId) {

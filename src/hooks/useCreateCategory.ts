@@ -7,7 +7,7 @@ import { ServiceContext } from '@context/ServiceContext';
 import { Category } from '@/types/commonTypes';
 
 function useCreateCategory() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { token, addCategory, userId } = useContext(DataContext) || {};
 
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
@@ -16,7 +16,6 @@ function useCreateCategory() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { token, addCategory } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
     const createCategory = async (payload: CategoryCreateFormProps) => {

@@ -6,7 +6,7 @@ import { useContext, useState } from 'react';
 import { setCatchError } from '@utils/methods';
 
 function useEditCategory() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { token, updateCategory, userId } = useContext(DataContext) || {};
 
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
@@ -15,7 +15,6 @@ function useEditCategory() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { token, updateCategory } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
     const editCategory = async (payload: CategoryEdit) => {

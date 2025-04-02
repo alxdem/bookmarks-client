@@ -6,7 +6,7 @@ import { ServiceContext } from '@context/ServiceContext';
 import { Bookmark, BookmarkCreate } from '@t/commonTypes';
 
 function useCreateBookmark() {
-    const userId = '673b3e623f2c79dde1aa2e4d';
+    const { activeCategoryId, token, addBookmark, userId } = useContext(DataContext) || {};
 
     if (!userId) {
         throw new Error(message.USER_ID_NOT_FOUND);
@@ -15,7 +15,6 @@ function useCreateBookmark() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { activeCategoryId, token, addBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
     const createBookmark = async (payload: BookmarkCreate) => {
