@@ -4,15 +4,24 @@ import Card from '@components/Card/Card';
 import PlusIcon from '@assets/svg/plus-1.svg?react';
 import { ServiceContext } from '@context/ServiceContext';
 import { useContext } from 'react';
+import { message } from '@utils/variables';
 
 const CardList = (): JSX.Element => {
     const items = useActiveBookmarks();
     const { setModalOpen, setConfirmFormText, setCurrentEntity } = useContext(ServiceContext);
 
     const removeBookmark = (id: string) => {
-        setConfirmFormText('Удалить закладку?');
+        setConfirmFormText(message.BOOKMARK_REMOVE_QUESTION);
         setCurrentEntity('bookmark');
         setModalOpen('confirm', id);
+    };
+
+    const editBookmark = (id: string) => {
+        setModalOpen('bookmarkUpdate', id);
+    };
+
+    const btnPlusClick = () => {
+        setModalOpen('bookmarkCreate');
     };
 
     const elements = items.map(item => (
@@ -26,12 +35,9 @@ const CardList = (): JSX.Element => {
             order={item.order}
             image={item.image}
             onRemove={() => removeBookmark(item._id)}
+            onEdit={() => editBookmark(item._id)}
         />
     ));
-
-    const btnPlusClick = () => {
-        setModalOpen('bookmark');
-    };
 
     return (
         <section className={styles.cardList}>

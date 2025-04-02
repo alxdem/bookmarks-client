@@ -2,7 +2,7 @@ import { CategoryCreateFormProps } from '@components/FormCategory/FormCategory.p
 
 export type CrudMethod = 'GET' | 'POST' | 'PATCH' | 'DEL';
 export type ModalTypeCategory = 'categoryCreate' | 'categoryUpdate';
-export type ModalTypeBookmark = 'bookmark';
+export type ModalTypeBookmark = 'bookmarkCreate' | 'bookmarkUpdate';
 export type ModalType = ModalTypeCategory | ModalTypeBookmark | 'confirm';
 
 export interface ILayout {
@@ -45,13 +45,16 @@ export const isCategoryType = (type: ModalType): type is ModalTypeCategory => {
     return type === 'categoryCreate' || type === 'categoryUpdate';
 };
 
-export interface SelectOption {
-    value: string;
-    label: string;
+export const isBookmarkType = (type: ModalType): type is ModalTypeBookmark => {
+    return type === 'bookmarkCreate' || type === 'bookmarkUpdate';
 }
 
 export type CategoryEdit = Pick<Category, '_id' | 'title' | 'description'>;
 export type CategoryEditOrCreate = CategoryCreateFormProps | CategoryEdit;
-export type BookmarkCreate = Omit<Bookmark, '_id'>;
-export type BookmarkEditOrCreate = BookmarkCreate | Bookmark;
+
+type BookmarkCreateFormProps = Pick<Bookmark, 'title' | 'description' | 'url' | 'categoryId'>;
+export type BookmarkCreate = Omit<Bookmark, '_id' | 'userId'>;
+export type BookmarkEdit = Pick<Bookmark, '_id' | 'title' | 'description' | 'url' | 'categoryId'>;
+export type BookmarkEditOrCreate = BookmarkCreateFormProps | BookmarkEdit;
+
 export type EntityType = 'category' | 'bookmark' | null; 

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '@components/Field/Field.module.css';
 import { FieldProps, InputOrTextarea } from '@components/Field/Field.props';
 import cn from 'classnames';
-import FieldSelect from '@components/FieldSelect/FieldSelect';
+import Label from '@components/Label/Label';
 
 const Field = React.forwardRef<InputOrTextarea, FieldProps>(({
     label,
@@ -10,8 +10,6 @@ const Field = React.forwardRef<InputOrTextarea, FieldProps>(({
     className,
     type = 'text',
     value = '',
-    selectedValue = null,
-    options = [],
     onChange,
     ...props
 }, ref) => {
@@ -30,16 +28,9 @@ const Field = React.forwardRef<InputOrTextarea, FieldProps>(({
             element = <textarea
                 className={cn(styles.defaultInput, styles.textarea)}
                 value={value}
-                onChange={(value) => onChange(value)}
+                onChange={onChange}
                 ref={ref as React.Ref<HTMLTextAreaElement>}
                 {...props}
-            />;
-            break;
-        case 'select':
-            element = <FieldSelect
-                className={cn(styles.defaultInput, styles.select)}
-                options={options}
-                value={selectedValue}
             />;
             break;
         default:
@@ -47,18 +38,20 @@ const Field = React.forwardRef<InputOrTextarea, FieldProps>(({
                 type={type}
                 className={cn(styles.defaultInput, styles.input)}
                 value={value}
-                onChange={(value) => onChange(value)}
+                onChange={onChange}
                 ref={ref as React.Ref<HTMLInputElement>}
                 {...props}
             />;
     }
 
     return (
-        <label className={classes}>
-            <span className={styles.label}>{label}</span>
+        <Label
+            label={label}
+            error={error}
+            className={classes}
+        >
             {element}
-            {error && <span className={styles.error}>{error}</span>}
-        </label>
+        </Label>
     );
 });
 

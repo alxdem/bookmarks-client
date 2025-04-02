@@ -10,12 +10,13 @@ import { DataContext } from '@context/DataContext';
 import { Category, CategoryEditOrCreate } from '@t/commonTypes';
 import useCreateCategory from '@hooks/useCreateCategory';
 import useEditCategory from '@hooks/useEditCategory';
+import { message } from "@utils/variables.ts";
 
 const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
     const { categories } = useContext(DataContext) || {};
 
     const isEdit = type === 'categoryUpdate' && id !== undefined;
-    const mainBtnText = isEdit ? 'Сохранить' : 'Создать';
+    const mainBtnText = isEdit ? message.SAVE_TEXT : 'Создать';
 
     const currentCategory: Category | null = isEdit ? categories?.find(category => category._id === id) || null : null;
 

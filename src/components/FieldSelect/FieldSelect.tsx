@@ -1,37 +1,54 @@
 import cn from 'classnames';
-import Select from 'react-select';
+import Select, { SelectInstance, SingleValue } from 'react-select';
 import styles from '@components/FieldSelect/FieldSelect.module.css';
-import { FieldSelectProps } from '@components/FieldSelect/FieldSelect.props';
+import { FieldSelectProps, OptionProps } from '@components/FieldSelect/FieldSelect.props';
+import {forwardRef} from 'react';
+import Label from '@components/Label/Label';
 
-const FieldSelect = ({ options, value = null, className }: FieldSelectProps) => {
+const FieldSelect = forwardRef<SelectInstance<OptionProps>, FieldSelectProps>(({
+    options,
+    value,
+    onChange,
+    className,
+    label,
+    error,
+}, ref) => {
     return (
-        <Select
-            className={cn(className, styles.select)}
-            options={options}
-            defaultValue={value}
-            classNames={{
-                container: () => styles.container,
-                control: ({ isFocused }) => cn(
-                    styles.control,
-                    isFocused && styles.controlFocused,
-                ),
-                dropdownIndicator: () => styles.dropdownIndicator,
-                indicatorsContainer: () => styles.indicatorsContainer,
-                indicatorSeparator: () => styles.indicatorsSeparator,
-                input: () => styles.input,
-                menu: () => styles.menu,
-                menuList: () => styles.menuList,
-                menuPortal: () => styles.menuPortal,
-                option: ({ isSelected, isFocused }) => cn(
-                    styles.option,
-                    isSelected && styles.optionSelected,
-                    isFocused && styles.optionFocused,
-                ),
-                valueContainer: () => styles.valueContainer,
-                singleValue: () => styles.singleValue,
-            }}
-        />
+        <Label
+            label={label}
+            error={error}
+            className={className}
+        >
+            <Select<OptionProps>
+                ref={ref}
+                className={styles.select}
+                options={options}
+                defaultValue={options?.find((option) => option.value === value?.value)}
+                onChange={(option: SingleValue<OptionProps>) => onChange(option?.value || '')}
+                classNames={{
+                    container: () => styles.container,
+                    control: ({ isFocused }) => cn(
+                        styles.control,
+                        isFocused && styles.controlFocused,
+                    ),
+                    dropdownIndicator: () => styles.dropdownIndicator,
+                    indicatorsContainer: () => styles.indicatorsContainer,
+                    indicatorSeparator: () => styles.indicatorsSeparator,
+                    input: () => styles.input,
+                    menu: () => styles.menu,
+                    menuList: () => styles.menuList,
+                    menuPortal: () => styles.menuPortal,
+                    option: ({ isSelected, isFocused }) => cn(
+                        styles.option,
+                        isSelected && styles.optionSelected,
+                        isFocused && styles.optionFocused,
+                    ),
+                    valueContainer: () => styles.valueContainer,
+                    singleValue: () => styles.singleValue,
+                }}
+            />
+        </Label>
     );
-}
+});
 
 export default FieldSelect;

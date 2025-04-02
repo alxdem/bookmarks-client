@@ -7,4 +7,5 @@ export interface CardProps {
     order?: number;
     image?: string;
     onRemove: () => void;
-} 
+    onEdit: () => void;
+}

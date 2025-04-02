@@ -1,4 +1,4 @@
-import { SelectOption } from '@t/commonTypes';
+import { OptionProps } from '@components/FieldSelect/FieldSelect.props';
 
 export type InputOrTextarea = HTMLInputElement | HTMLTextAreaElement;
 
@@ -8,6 +8,7 @@ export interface FieldProps extends React.HTMLAttributes<InputOrTextarea> {
     className?: string;
     type?: string;
     value?: string;
-    selectedValue?: SelectOption;
-    options?: SelectOption[];
+    selectedValue?: OptionProps;
+    options?: OptionProps[];
+    onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }

@@ -1,0 +1,24 @@
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.error {
+    color: var(--color-error-700);
+    font-size: 12px;
+    line-height: 1.1;
+}
+
+.text {
+    font-size: 14px;
+    line-height: 1.1;
+    cursor: pointer;
+    color: var(--color-secondary-700);
+}
+
+.isError .text {
+    color: var(--color-error-700);
+}

@@ -6,22 +6,13 @@ import XIcon from '@assets/svg/x.svg?react';
 import EditIcon from '@assets/svg/edit.svg?react';
 
 const Card = ({
-    userId,
     title,
     url,
     description,
-    categoryId,
-    order,
     image,
     onRemove,
+    onEdit,
 }: CardProps): JSX.Element => {
-    const remove = () => {
-        console.log('remove', userId);
-        console.log('categoryId', categoryId);
-        console.log('order', order);
-        console.log('image', image);
-    };
-
     const logo = image
         ? <img className={styles.logo} src={image} alt={title} />
         : <span className={cn(styles.logo, styles.logoPlug)}></span>;
@@ -44,7 +35,7 @@ const Card = ({
             <div className={styles.buttons}>
                 <Button
                     className={cn(styles.button, styles.edit)}
-                    onClick={remove}
+                    onClick={onEdit}
                     shape='square'
                 >
                     <EditIcon />

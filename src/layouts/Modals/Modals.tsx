@@ -4,7 +4,7 @@ import { ServiceContext } from '@context/ServiceContext';
 import XIcon from '@assets/svg/x.svg?react';
 import styles from '@layouts/Modals/Modals.module.css';
 import FormCategory from '@/components/FormCategory/FormCategory';
-import { isCategoryType } from '@t/commonTypes';
+import { isCategoryType, isBookmarkType } from '@t/commonTypes';
 import FormConfirm from '@components/FormConfirm/FormConfirm';
 import useDeleteCategory from '@hooks/useDeleteCategory';
 import FormBookmark from '@components/FormBookmark/FormBookmark';
@@ -84,7 +84,12 @@ const Modals = () => {
                     remove={confirmCategoryRemoving}
                 />
             }
-            {modalType === 'bookmark' && <FormBookmark />}
+            {isBookmarkType(modalType)
+                && <FormBookmark
+                    type={modalType}
+                    id={itemId}
+                />
+            }
             {modalType === 'confirm'
                 && <FormConfirm
                     text={confirmFormText}

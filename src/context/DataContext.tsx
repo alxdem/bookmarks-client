@@ -1,12 +1,13 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Bookmark, Category, CategoryEdit, SelectOption } from '@t/commonTypes';
+import {Bookmark, BookmarkEdit, Category, CategoryEdit } from '@t/commonTypes';
 import { createOptionsFromCategories } from '@utils/methods';
+import { OptionProps } from '@components/FieldSelect/FieldSelect.props';
 
 type TokenType = string | null;
 
 interface DataObjectProps {
     categories: Category[];
-    categoriesForSelect: SelectOption[];
+    categoriesForSelect: OptionProps[];
     activeCategoryId: string;
     bookmarks: Bookmark[];
     token: TokenType;
@@ -15,7 +16,7 @@ interface DataObjectProps {
 interface ContextProps {
     categories: Category[];
     activeCategoryId: string;
-    categoriesForSelect: SelectOption[];
+    categoriesForSelect: OptionProps[];
     bookmarks: Bookmark[];
     token: TokenType;
     setActiveCategoryId: (value: string) => void;
@@ -27,6 +28,7 @@ interface ContextProps {
     removeBookmark: (id: string) => void;
     updateCategory: (props: CategoryEdit) => void;
     addBookmark: (value: Bookmark) => void;
+    updateBookmark: (value: Bookmark) => void;
 }
 
 const initialDataObject: DataObjectProps = {
@@ -103,6 +105,18 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         }));
     };
 
+    const updateBookmark = ({ _id, title, description, categoryId }: BookmarkEdit) => {
+        const newArray = dataContext.bookmarks.map(bookmark =>
+            bookmark._id === _id
+            ? { ...bookmark, title, description, categoryId }
+            : bookmark
+        );
+        setDataContext(state => ({
+            ...state,
+            bookmarks: newArray,
+        }));
+    };
+
     const setBookmarks = (bookmarks: Bookmark[]) => {
         setDataContext(state => ({
             ...state,
@@ -147,6 +161,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             removeBookmark,
             updateCategory,
             addBookmark,
+            updateBookmark,
         }}>
             {children}
         </DataContext.Provider>

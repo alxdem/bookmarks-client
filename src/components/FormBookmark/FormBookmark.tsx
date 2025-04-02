@@ -6,16 +6,26 @@ import Button from '@components/Button/Button';
 import { BookmarkEditOrCreate } from '@t/commonTypes';
 import useCreateBookmark from '@hooks/useCreateBookmark';
 import SpinnerIcon from '@assets/svg/spinner.svg?react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { DataContext } from '@context/DataContext';
+import { FormBookmarkProps } from '@components/FormBookmark/FormBookmark.props';
+import useEditBookmark from '@hooks/useEditBookmark';
+import FieldSelect from '@components/FieldSelect/FieldSelect';
+import { message } from '@utils/variables';
 
-const FormBookmark = () => {
+const FormBookmark = ({ type, id }: FormBookmarkProps) => {
     const [createBookmark, isLoading] = useCreateBookmark();
-    const { activeCategoryId, categoriesForSelect } = useContext(DataContext) || {};
+    const [editBookmark] = useEditBookmark();
+    const { activeCategoryId, categoriesForSelect, bookmarks } = useContext(DataContext) || {};
+
+    const isEdit = type === 'bookmarkUpdate' && id !== undefined;
+    const currentBookmark = isEdit ? bookmarks?.find(bookmark => bookmark._id === id) || null : null;
+    const isEditType = isEdit && Boolean(currentBookmark);
 
     const {
         handleSubmit,
         control,
+        setValue,
     } = useForm<BookmarkEditOrCreate>();
 
     const formClasses = cn(
@@ -24,10 +34,27 @@ const FormBookmark = () => {
     );
 
     const onSubmit: SubmitHandler<BookmarkEditOrCreate> = async (payload) => {
-        await createBookmark(payload);
+        if (isEditType) {
+            if (!currentBookmark?._id) return;
+
+            await editBookmark({ ...payload, _id: currentBookmark?._id });
+        } else {
+            await createBookmark({...payload});
+        }
     };
 
     const activeOption = categoriesForSelect?.find(category => category.value === activeCategoryId);
+
+    useEffect(() => {
+        if (!isEditType || !currentBookmark) {
+            return;
+        }
+
+        setValue('title', currentBookmark.title);
+        setValue('description', currentBookmark.description);
+        setValue('url', currentBookmark.url);
+        setValue('categoryId', currentBookmark.categoryId);
+    }, [currentBookmark]);
 
     return (
         <form className={formClasses} onSubmit={handleSubmit(onSubmit)}>
@@ -67,13 +94,12 @@ const FormBookmark = () => {
                 name='categoryId'
                 control={control}
                 render={({ field }) => (
-                    <Field
+                    <FieldSelect
                         className={cn(styles.formElement, styles.field)}
                         label='Категория'
-                        type='select'
                         options={categoriesForSelect}
                         {...field}
-                        selectedValue={activeOption}
+                        value={activeOption}
                         ref={field.ref}
                     />
                 )}
@@ -94,7 +120,7 @@ const FormBookmark = () => {
             <Button
                 className={cn(styles.button, styles.formElement)}
             >
-                Сохранить
+                {message.SAVE_TEXT}
             </Button>
             <SpinnerIcon className={styles.loader} />
         </form>
