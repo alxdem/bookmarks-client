@@ -1,4 +1,5 @@
-import { SetCatchError, Category, SelectOption } from '@t/commonTypes';
+import { SetCatchError, Category } from '@t/commonTypes';
+import { OptionProps } from '@components/FieldSelect/FieldSelect.props.ts';
 
 const setCatchError: SetCatchError = (error, setError) => {
     if (typeof error === 'string') {
@@ -8,7 +9,7 @@ const setCatchError: SetCatchError = (error, setError) => {
     }
 }
 
-const createOptionsFromCategories = (items: Category[]): SelectOption[] => {
+const createOptionsFromCategories = (items: Category[]): OptionProps[] => {
     return items.map(item => ({
         value: item._id,
         label: item.title,
