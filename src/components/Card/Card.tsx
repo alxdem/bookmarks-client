@@ -9,12 +9,13 @@ const Card = ({
     title,
     url,
     description,
-    image,
     onRemove,
     onEdit,
 }: CardProps): JSX.Element => {
-    const logo = image
-        ? <img className={styles.logo} src={image} alt={title} />
+    const logoUrl = `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=32`;
+
+    const logo = logoUrl
+        ? <img className={styles.logo} src={logoUrl} alt={title} />
         : <span className={cn(styles.logo, styles.logoPlug)}></span>;
 
     return (

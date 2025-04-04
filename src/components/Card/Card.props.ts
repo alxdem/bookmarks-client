@@ -5,7 +5,6 @@ export interface CardProps {
     description?: string;
     categoryId?: string;
     order?: number;
-    image?: string;
     onRemove: () => void;
     onEdit: () => void;
 }
