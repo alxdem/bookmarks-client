@@ -28,12 +28,6 @@ export interface Bookmark {
     image?: string,
 }
 
-export interface FetchOptions {
-    method?: CrudMethod;
-    headers?: HeadersInit;
-    body?: BodyInit;
-}
-
 export interface SetCatchError {
     (
         error: unknown,

@@ -9,18 +9,13 @@ import Modals from '@layouts/Modals/Modals';
 
 const MainLayout = ({ children }: ILayout) => {
     const {
-        userId,
         setActiveCategoryId,
         setCategories,
         setBookmarks
     } = useContext(DataContext) || {};
 
-    if (!userId) {
-        return;
-    }
-
-    const [categoriesData] = useGetCategories(userId);
-    const [bookmarksData] = useGetBookmarks(userId);
+    const [categoriesData] = useGetCategories();
+    const [bookmarksData] = useGetBookmarks();
 
     useEffect(() => {
         if (categoriesData.length && setCategories && setActiveCategoryId) {

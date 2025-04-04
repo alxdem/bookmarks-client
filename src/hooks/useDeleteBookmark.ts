@@ -1,64 +1,33 @@
 import { DataContext } from '@/context/DataContext';
-import { setCatchError } from '@/utils/methods';
-import { message } from '@/utils/variables';
 import { Bookmark } from '@t/commonTypes';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
+import useFetch from '@hooks/useFetch';
 
 interface DeleteBookmarkProps {
     (id?: string): Promise<Bookmark | undefined>;
 }
 
 function useDeleteBookmark() {
-    const { removeBookmark, token, userId } = useContext(DataContext) || {};
+    const { removeBookmark} = useContext(DataContext) || {};
+    const [deleteBookmark, isLoading, error] = useFetch<Bookmark>();
 
-    if (!userId) {
-        throw new Error(message.USER_ID_NOT_FOUND);
-    }
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-
-    const deleteBookmark: DeleteBookmarkProps = async (id) => {
+    const deleteBookmarkHandler: DeleteBookmarkProps = async (id) => {
         if (!id) {
             console.error('Не передан id закладки для удаления');
             return;
         }
 
-        setIsLoading(true);
+        const urlWithParams = `${import.meta.env.VITE_API_URL}/items/${id}`;
+        const data = await deleteBookmark('DELETE', urlWithParams);
 
-        try {
-            const urlWithParams = `${import.meta.env.VITE_API_URL}/items/${id}`;
-            const res = await fetch(urlWithParams, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    userId,
-                }),
-            });
-            if (!res.ok) {
-                throw new Error('Не смог получить данные в запросе');
-            }
-
-            const dataJson: Bookmark = await res.json();
-
-            if (removeBookmark) {
-                removeBookmark(dataJson._id);
-            }
-
-            setError('');
-            return dataJson;
-        } catch (error: unknown) {
-            setCatchError(error, setError);
-        } finally {
-            setIsLoading(false);
+        if (removeBookmark && data) {
+            removeBookmark(data._id);
         }
 
+        return data;
     };
 
-    return [deleteBookmark, isLoading, error] as const;
-};
+    return [deleteBookmarkHandler, isLoading, error] as const;
+}
 
 export default useDeleteBookmark;

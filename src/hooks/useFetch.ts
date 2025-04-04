@@ -1,40 +1,50 @@
-import { useState, useEffect } from 'react';
-import { FetchOptions } from '@t/commonTypes';
+import {useState, useContext} from 'react';
+import { DataContext } from "@context/DataContext.tsx";
+import { message } from "@utils/variables.ts";
+import {setCatchError} from "@utils/methods.ts";
 
-
-
-const useFetch = <T>(url: string, initialState: T, options: FetchOptions = {}): [T, boolean, string] => {
-    const [data, setData] = useState<T>(initialState);
-    const [isLoading, setIsLoading] = useState(true);
+const useFetch = <T>() => {
+    const { token, userId } = useContext(DataContext) || {};
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const fetchData = async () => {
+    if (!userId) {
+        throw new Error(message.USER_ID_NOT_FOUND);
+    }
+
+    const fetchData = async (method: string, url: string, body?: object): Promise<T | undefined> => {
+        setIsLoading(true);
+
+        const options: RequestInit = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        };
+
+        if (method !== 'GET') {
+            options.body = body ? JSON.stringify({ ...body, userId }): JSON.stringify({ userId });
+        }
+
         try {
             const res = await fetch(url, options);
-            const dataJson = await res.json();
 
-            if (!dataJson.ok) {
-                throw Error('Не смог получить данные в запросе');
+            if (!res.ok) {
+                throw new Error('Ошибка в запросе');
             }
 
-            setData(dataJson);
+            const data: T = await res.json();
             setError('');
+            return data;
         } catch (error: unknown) {
-            if (typeof error === 'string') {
-                setError(error);
-            } else if (error instanceof TypeError) {
-                setError(error.message);
-            }
+            setCatchError(error, setError);
         } finally {
             setIsLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [url]);
-
-    return [data, isLoading, error];
+    return [fetchData, isLoading, error] as const;
 };
 
 export default useFetch;

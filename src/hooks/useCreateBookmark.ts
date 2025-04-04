@@ -1,59 +1,37 @@
-import { message } from '@utils/variables';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { DataContext } from '@context/DataContext';
-import { setCatchError } from '@utils/methods';
 import { ServiceContext } from '@context/ServiceContext';
 import { Bookmark, BookmarkCreate } from '@t/commonTypes';
+import useFetch from '@hooks/useFetch';
 
 function useCreateBookmark() {
-    const { activeCategoryId, token, addBookmark, userId } = useContext(DataContext) || {};
-
-    if (!userId) {
-        throw new Error(message.USER_ID_NOT_FOUND);
-    }
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-
+    const { activeCategoryId, addBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
+    const [createBookmark, isLoading, error] = useFetch<Bookmark>();
 
-    const createBookmark = async (payload: BookmarkCreate) => {
-        setIsLoading(true);
+    const createBookmarkHandler = async (payload: BookmarkCreate) => {
+        const urlWithParams = `${import.meta.env.VITE_API_URL}/items`;
+        const data = await createBookmark('POST', urlWithParams, {
+            ...payload,
+            categoryId: activeCategoryId,
+        });
 
-        try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/items`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    ...payload,
-                    userId,
-                    categoryId: activeCategoryId,
-                }),
-            });
-            const data: Bookmark = await res.json();
-
-            if (!data._id) return;
-
-            if (addBookmark) {
-                addBookmark(data);
-            }
-
-            if (setModalClose) {
-                setModalClose();
-            }
-
-            return data;
-        } catch (error: unknown) {
-            setCatchError(error, setError);
-        } finally {
-            setIsLoading(false);
+        if (!data || !data._id) {
+            return;
         }
-    }
 
-    return [createBookmark, isLoading, error] as const;
+        if (addBookmark) {
+            addBookmark(data);
+        }
+
+        if (setModalClose) {
+            setModalClose();
+        }
+
+        return data;
+    };
+
+    return [createBookmarkHandler, isLoading, error] as const;
 }
 
 export default useCreateBookmark;
