@@ -33,7 +33,6 @@ const CardList = (): JSX.Element => {
             description={item.description}
             categoryId={item.categoryId}
             order={item.order}
-            image={item.image}
             onRemove={() => removeBookmark(item._id)}
             onEdit={() => editBookmark(item._id)}
         />
