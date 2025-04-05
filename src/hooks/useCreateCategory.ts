@@ -4,6 +4,7 @@ import { CategoryCreateFormProps } from '@components/FormCategory/FormCategory.p
 import { ServiceContext } from '@context/ServiceContext';
 import { Category } from '@/types/commonTypes';
 import useFetch from '@hooks/useFetch';
+import {lSCategoryClear} from "@utils/methods.ts";
 
 function useCreateCategory() {
     const { addCategory } = useContext(DataContext) || {};
@@ -28,6 +29,8 @@ function useCreateCategory() {
         if (setModalClose) {
             setModalClose();
         }
+
+        lSCategoryClear();
 
         return data;
     };

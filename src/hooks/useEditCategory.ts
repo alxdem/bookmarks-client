@@ -3,6 +3,7 @@ import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
 import { useContext } from 'react';
 import useFetch from '@hooks/useFetch';
+import {lSCategoryClear} from "@utils/methods";
 
 function useEditCategory() {
     const { updateCategory } = useContext(DataContext) || {};
@@ -24,6 +25,8 @@ function useEditCategory() {
         if (setModalClose) {
             setModalClose();
         }
+
+        lSCategoryClear();
 
         return data;
     };

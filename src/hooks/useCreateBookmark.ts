@@ -3,6 +3,7 @@ import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
 import { Bookmark, BookmarkCreate } from '@t/commonTypes';
 import useFetch from '@hooks/useFetch';
+import {lSBookmarkClear} from "@utils/methods.ts";
 
 function useCreateBookmark() {
     const { activeCategoryId, addBookmark } = useContext(DataContext) || {};
@@ -27,6 +28,8 @@ function useCreateBookmark() {
         if (setModalClose) {
             setModalClose();
         }
+
+        lSBookmarkClear();
 
         return data;
     };

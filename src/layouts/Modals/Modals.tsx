@@ -9,6 +9,7 @@ import FormConfirm from '@components/FormConfirm/FormConfirm';
 import useDeleteCategory from '@hooks/useDeleteCategory';
 import FormBookmark from '@components/FormBookmark/FormBookmark';
 import useDeleteBookmark from '@hooks/useDeleteBookmark';
+import { lSCategoryClear, lSBookmarkClear } from '@utils/methods';
 
 Modal.setAppElement('#root');
 
@@ -44,6 +45,7 @@ const Modals = () => {
             return;
         }
 
+        lSCategoryClear();
         setModalClose();
     }
 
@@ -54,6 +56,7 @@ const Modals = () => {
             return;
         }
 
+        lSBookmarkClear();
         setModalClose();
     };
 

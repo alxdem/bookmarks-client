@@ -15,7 +15,7 @@ import { message } from '@utils/variables';
 
 const FormBookmark = ({ type, id }: FormBookmarkProps) => {
     const [createBookmark, isLoading] = useCreateBookmark();
-    const [editBookmark] = useEditBookmark();
+    const [editBookmark, isEditLoading] = useEditBookmark();
     const { activeCategoryId, categoriesForSelect, bookmarks } = useContext(DataContext) || {};
 
     const isEdit = type === 'bookmarkUpdate' && id !== undefined;
@@ -30,7 +30,7 @@ const FormBookmark = ({ type, id }: FormBookmarkProps) => {
 
     const formClasses = cn(
         styles.form,
-        { [styles.loading]: isLoading }
+        { [styles.loading]: isLoading || isEditLoading }
     );
 
     const onSubmit: SubmitHandler<BookmarkEditOrCreate> = async (payload) => {

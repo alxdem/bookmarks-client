@@ -7,6 +7,12 @@ const message = {
     SAVE_TEXT: 'Сохранить',
 };
 
+const LSKey = {
+    CATEGORIES: 'categories',
+    BOOKMARKS: 'bookmarks',
+}
+
 export {
     message,
+    LSKey,
 }

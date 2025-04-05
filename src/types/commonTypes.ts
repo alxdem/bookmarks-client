@@ -51,4 +51,4 @@ export type BookmarkCreate = Omit<Bookmark, '_id' | 'userId'>;
 export type BookmarkEdit = Pick<Bookmark, '_id' | 'title' | 'description' | 'url' | 'categoryId'>;
 export type BookmarkEditOrCreate = BookmarkCreateFormProps | BookmarkEdit;
 
-export type EntityType = 'category' | 'bookmark' | null; 
+export type EntityType = 'category' | 'bookmark' | null;

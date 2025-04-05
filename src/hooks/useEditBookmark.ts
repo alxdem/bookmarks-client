@@ -3,6 +3,7 @@ import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
 import { Bookmark, BookmarkEdit } from '@t/commonTypes';
 import useFetch from '@hooks/useFetch';
+import { lSBookmarkClear } from "@utils/methods.ts";
 
 function useEditBookmark() {
     const { updateBookmark } = useContext(DataContext) || {};
@@ -24,6 +25,8 @@ function useEditBookmark() {
         if (setModalClose) {
             setModalClose();
         }
+
+        lSBookmarkClear();
 
         return data;
     };

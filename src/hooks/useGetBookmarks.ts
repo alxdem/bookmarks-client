@@ -2,6 +2,8 @@ import {useContext, useEffect, useState} from 'react';
 import { Bookmark } from '@t/commonTypes';
 import useFetch from '@hooks/useFetch';
 import {DataContext} from "@context/DataContext.tsx";
+import { checkLocalStorageArray } from '@utils/methods';
+import { LSKey } from '@utils/variables';
 
 const useGetBookmarks = () => {
     const { userId } = useContext(DataContext) || {};
@@ -17,9 +19,11 @@ const useGetBookmarks = () => {
                 return;
             }
 
+            localStorage.setItem(LSKey.BOOKMARKS, JSON.stringify(data));
             setBookmarks(data);
         }
-        fetchData();
+
+        checkLocalStorageArray<Bookmark[]>(LSKey.BOOKMARKS, setBookmarks, fetchData);
     }, []);
 
     return [bookmarks, isLoading, error] as const;

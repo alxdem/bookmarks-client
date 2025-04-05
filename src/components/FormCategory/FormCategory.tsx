@@ -23,7 +23,7 @@ const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
     const isEditType = isEdit && Boolean(currentCategory);
 
     const [createCategory, isLoading] = useCreateCategory();
-    const [editCategory] = useEditCategory();
+    const [editCategory, isEditLoading] = useEditCategory();
 
     const {
         handleSubmit,
@@ -46,7 +46,7 @@ const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
 
     const formClasses = cn(
         styles.form,
-        { [styles.loading]: isLoading }
+        { [styles.loading]: isLoading || isEditLoading}
     );
 
     const onSubmit: SubmitHandler<CategoryEditOrCreate> = async (payload) => {
