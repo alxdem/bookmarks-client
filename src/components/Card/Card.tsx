@@ -11,6 +11,8 @@ const Card = ({
     description,
     onRemove,
     onEdit,
+    className,
+    ...props
 }: CardProps): JSX.Element => {
     const logoUrl = `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=32`;
 
@@ -19,7 +21,10 @@ const Card = ({
         : <span className={cn(styles.logo, styles.logoPlug)}></span>;
 
     return (
-        <article className={styles.card}>
+        <article
+            className={cn(styles.card, className)}
+            {...props}
+        >
             <a
                 className={styles.link}
                 href={url}

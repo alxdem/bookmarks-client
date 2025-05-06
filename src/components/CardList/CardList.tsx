@@ -64,6 +64,7 @@ const CardList = (): JSX.Element => {
     const elements = items.map(item => (
         <SortableCard id={item._id} key={item._id}>
             <Card
+                className={styles.card}
                 userId={item.userId}
                 title={item.title}
                 url={item.url}
