@@ -14,7 +14,7 @@ function useActiveBookmarks() {
 
     }, [bookmarks, activeCategoryId]);
 
-    return data;
+    return [data, setData] as const;
 }
 
 export default useActiveBookmarks;

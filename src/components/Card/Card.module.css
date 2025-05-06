@@ -20,6 +20,10 @@
     cursor: pointer;
 }
 
+.link > * {
+    pointer-events: none;
+}
+
 .main {
     display: flex;
     gap: 10px;

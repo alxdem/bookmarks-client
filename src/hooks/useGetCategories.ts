@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import {Category} from '@t/commonTypes';
 import { DataContext } from '@context/DataContext';
 import useFetch from '@hooks/useFetch';
-import { checkLocalStorageArray } from '@utils/methods';
+import { checkLocalStorageArray, lSDataSet } from '@utils/methods';
 import { LSKey } from '@utils/variables';
 
 const useGetCategories = () => {
@@ -19,7 +19,7 @@ const useGetCategories = () => {
                 return;
             }
 
-            localStorage.setItem(LSKey.CATEGORIES, JSON.stringify(data));
+            lSDataSet<Category[]>(LSKey.CATEGORIES, data);
             setCategories(data);
         };
 

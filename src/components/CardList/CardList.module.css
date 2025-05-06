@@ -1,5 +1,5 @@
 .cardList {
-    
+
 }
 
 .inner {
@@ -7,6 +7,18 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 1vw;
     padding: 1vw;
+}
+
+/* TODO: Найти способ блокировать карточки без css */
+.inner > * {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity ease-out 0.2s;
+}
+
+.inner.loading > * {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
 }
 
 .button {
