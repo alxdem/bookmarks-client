@@ -1,4 +1,4 @@
-export interface CardProps {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     userId: string;
     url: string;
     title: string;

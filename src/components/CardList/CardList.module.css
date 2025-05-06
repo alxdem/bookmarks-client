@@ -21,6 +21,10 @@
     pointer-events: none !important;
 }
 
+.card {
+    height: 100%;
+}
+
 .button {
     border: none;
     border-radius: 5px;
