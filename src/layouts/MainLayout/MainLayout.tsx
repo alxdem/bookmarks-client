@@ -15,7 +15,7 @@ const MainLayout = ({ children }: ILayout) => {
     } = useContext(DataContext) || {};
 
     const [categoriesData] = useGetCategories();
-    const [bookmarksData] = useGetBookmarks();
+    const { bookmarks } = useGetBookmarks();
 
     useEffect(() => {
         if (categoriesData.length && setCategories && setActiveCategoryId) {
@@ -25,10 +25,10 @@ const MainLayout = ({ children }: ILayout) => {
     }, [categoriesData]);
 
     useEffect(() => {
-        if (bookmarksData.length && setBookmarks) {
-            setBookmarks(bookmarksData);
+        if (bookmarks.length && setBookmarks) {
+            setBookmarks(bookmarks);
         }
-    }, [bookmarksData]);
+    }, [bookmarks]);
 
     return (
         <div className={styles.main}>

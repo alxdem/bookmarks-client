@@ -50,10 +50,12 @@ const FormBookmark = ({ type, id }: FormBookmarkProps) => {
             return;
         }
 
-        setValue('title', currentBookmark.title);
-        setValue('description', currentBookmark.description);
-        setValue('url', currentBookmark.url);
-        setValue('categoryId', currentBookmark.categoryId);
+        const {title, description, url, categoryId} = currentBookmark;
+
+        setValue('title', title);
+        setValue('description', description);
+        setValue('url', url);
+        setValue('categoryId', categoryId);
     }, [currentBookmark]);
 
     return (

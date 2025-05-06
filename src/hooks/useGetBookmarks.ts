@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from 'react';
 import { Bookmark } from '@t/commonTypes';
 import useFetch from '@hooks/useFetch';
 import {DataContext} from "@context/DataContext.tsx";
-import { checkLocalStorageArray } from '@utils/methods';
+import { checkLocalStorageArray, lSDataSet } from '@utils/methods';
 import { LSKey } from '@utils/variables';
 
 const useGetBookmarks = () => {
@@ -19,14 +19,14 @@ const useGetBookmarks = () => {
                 return;
             }
 
-            localStorage.setItem(LSKey.BOOKMARKS, JSON.stringify(data));
+            lSDataSet<Bookmark[]>(LSKey.BOOKMARKS, data);
             setBookmarks(data);
         }
 
         checkLocalStorageArray<Bookmark[]>(LSKey.BOOKMARKS, setBookmarks, fetchData);
     }, []);
 
-    return [bookmarks, isLoading, error] as const;
+    return {bookmarks, isLoading, error};
 }
 
 export default useGetBookmarks;

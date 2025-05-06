@@ -44,6 +44,10 @@ const lSBookmarkClear = () => {
   localStorage.removeItem(LSKey.BOOKMARKS);
 };
 
+const lSDataSet = <T>(key: string, data: T) => {
+    localStorage.setItem(key, JSON.stringify(data));
+};
+
 export {
     setCatchError,
     createOptionsFromCategories,
@@ -51,4 +55,5 @@ export {
     checkLocalStorageArray,
     lSCategoryClear,
     lSBookmarkClear,
+    lSDataSet,
 }

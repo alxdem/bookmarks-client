@@ -4,9 +4,15 @@ export type CrudMethod = 'GET' | 'POST' | 'PATCH' | 'DEL';
 export type ModalTypeCategory = 'categoryCreate' | 'categoryUpdate';
 export type ModalTypeBookmark = 'bookmarkCreate' | 'bookmarkUpdate';
 export type ModalType = ModalTypeCategory | ModalTypeBookmark | 'confirm';
+export type ChildrenProps = string | JSX.Element | JSX.Element[];
+
+export interface Response<T> {
+    success?: boolean;
+    data?: T;
+}
 
 export interface ILayout {
-    children: string | JSX.Element | JSX.Element[];
+    children: ChildrenProps;
 }
 
 export interface Category {
