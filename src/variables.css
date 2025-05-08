@@ -1,33 +1,29 @@
 :root {
     --color-white: #ffffff;
 
-    --color-main_100: #9988ff;
-    --color-main_200: #8877ee;
-    --color-main_500: #332299;
-    --color-main_700: #110077;
-
-    --color-secondary_300: #cccccc;
-    --color-secondary_400: #bbbbbb;
-    --color-secondary_500: #aaaaaa;
-    --color-secondary_800: #333333;
-
-    --color-bg-primary: #FCFCFD;
-
     --color-error-50: #FFF1F2;
     --color-error-100: #FFE4E6;
     --color-error-700: #BE123C;
 
-    /* New */
     --color-primary-50: #EFF6FF;
     --color-primary-100: #DBEAFE;
     --color-primary-200: #BFDBFE;
     --color-primary-500: #3B82F6;
+
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+
     --color-primary-950: #172554;
 
     --color-secondary-50: #F8FAFC;
     --color-secondary-100: #F1F5F9;
     --color-secondary-200: #E2E8F0;
     --color-secondary-300: #CBD5E1;
+    --color-secondary-400: #94a3b8;
+    --color-secondary-500: #64748b;
+    --color-secondary-600: #475569;
     --color-secondary-700: #334155;
     --color-secondary-950: #020617;
 
@@ -43,4 +39,13 @@
         Helvetica,
         Arial,
         sans-serif;
+
+    --padding-primary: 20px;
+
+    --card-width: 220px;
+    --card-height: 100px;
+    --card-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0 0,
+    rgba(94, 93, 102, 0.1) 2px 2px 3px 0;
+    --card-shadow-hover: rgba(94, 93, 102, 0.08) 1px 1px 0 0,
+    rgba(94, 93, 102, 0.2) 2px 5px 10px 0;
 }

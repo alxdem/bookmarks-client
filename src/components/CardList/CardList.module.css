@@ -3,10 +3,10 @@
 }
 
 .inner {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1vw;
-    padding: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-primary);
+    padding: var(--padding-primary) var(--padding-primary) var(--padding-primary) 0;
 }
 
 /* TODO: Найти способ блокировать карточки без css */
@@ -22,32 +22,30 @@
 }
 
 .card {
-    height: 100%;
+    height: var(--card-height);
 }
 
 .button {
     border: none;
     border-radius: 5px;
-    max-width: 100%;
+    width: var(--card-width);
     overflow: hidden;
     cursor: pointer;
-    min-height: 7.2vw;
+    min-height: var(--card-height);
     background-color: var(--color-white);
     transition: box-shadow var(--tt-function) var(--duration-md);
-    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0px 0px,
-        rgba(94, 93, 102, 0.1) 2px 2px 3px 0px;
+    box-shadow: var(--card-shadow);
 }
 
 .button:hover {
-    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0px 0px,
-        rgba(94, 93, 102, 0.2) 2px 5px 10px 0px;
+    box-shadow: var(--card-shadow-hover);
 }
 
 .button svg {
-    width: 2vw;
-    height: 2vw;
+    width: 34px;
+    height: 34px;
     pointer-events: none;
-    color: var(--color-main_500);
+    color: var(--color-primary-900);
     opacity: 0.8;
     transition: opacity var(--tt-function) var(--duration-md);
 }

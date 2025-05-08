@@ -27,7 +27,7 @@
 .inner {
     position: absolute;
     inset: 50% auto auto 50%;
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-secondary-50);
     overflow: auto;
     border-radius: 4px;
     outline: none;

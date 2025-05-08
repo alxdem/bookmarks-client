@@ -11,7 +11,7 @@
 .button:disabled:hover,
 .button:disabled {
     cursor: default;
-    background-color: var(--color-secondary_400);
+    background-color: var(--color-secondary-300);
     transition: none;
 }
 
@@ -40,12 +40,12 @@
 /* colors */
 
 .button.primary {
-    background-color: var(--color-main_500);
+    background-color: var(--color-primary-900);
     color: var(--color-white);
 }
 
 .button.primary:hover {
-    background-color: var(--color-main_700);
+    background-color: var(--color-primary-950);
 }
 
 .button.secondary {

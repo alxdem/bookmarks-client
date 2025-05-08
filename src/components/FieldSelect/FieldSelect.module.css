@@ -1,3 +1,9 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .container {
     cursor: pointer !important;
 }

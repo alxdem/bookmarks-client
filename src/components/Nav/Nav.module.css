@@ -1,5 +1,5 @@
 .nav {
-    border-top: 1px solid var(--color-secondary_300);
+    border-top: 1px solid var(--color-secondary-300);
 }
 
 .item {
@@ -23,13 +23,18 @@
 
 .link {
     display: flex;
-    padding: 10px;
+    padding: 10px var(--padding-primary);
     cursor: pointer;
-    color: var(--color-secondary_800);
-    border-bottom: 1px solid var(--color-secondary_300);
+    color: var(--color-secondary-700);
+    border-bottom: 1px solid var(--color-secondary-300);
     font-size: 16px;
 }
 
+.link:hover {
+    background-color: var(--color-primary-50);
+}
+
 .linkActive {
-    color: var(--color-main_200);
+    color: var(--color-primary-600);
+    background-color: var(--color-primary-50);
 }
