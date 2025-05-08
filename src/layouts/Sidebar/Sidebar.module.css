@@ -1,17 +1,17 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: var(--color-bg-primary);
-    padding: 10px;
+    background-color: var(--color-secondary-50);
+    padding: var(--padding-primary);
 }
 
 .nav {
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: calc(var(--padding-primary) * -1);
+    margin-right: calc(var(--padding-primary) * -1);
 }
 
 .buttonCreate {
-    margin-top: 10px;
+    margin-top: var(--padding-primary);
 }
 
 .buttonExit {

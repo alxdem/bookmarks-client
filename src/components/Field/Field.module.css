@@ -43,7 +43,6 @@
 }
 
 .label {
-    color: var(--color-main_700);
     font-size: 14px;
     line-height: 1.1;
     cursor: pointer;

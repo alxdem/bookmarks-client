@@ -22,7 +22,6 @@ const Sidebar = ({ className }: SidebarProps) => {
 
     return (
         <aside className={cn(styles.sidebar, className)}>
-            sidebar
             <Nav className={styles.nav} />
             <Button
                 className={styles.buttonCreate}

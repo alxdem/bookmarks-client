@@ -1,23 +1,23 @@
 .card {
     position: relative;
     border-radius: 5px;
-    max-width: 100%;
+    width: var(--card-width);
     overflow: hidden;
     background-color: var(--color-white);
     transition: box-shadow var(--tt-function) var(--duration-md);
-    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0 0,
-        rgba(94, 93, 102, 0.1) 2px 2px 3px 0;
+    box-shadow: var(--card-shadow);
 }
 
 .card:hover {
-    box-shadow: rgba(94, 93, 102, 0.08) 1px 1px 0 0,
-        rgba(94, 93, 102, 0.2) 2px 5px 10px 0;
+    box-shadow: var(--card-shadow-hover);
 }
 
 .link {
-    display: block;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     cursor: pointer;
+    height: 100%;
 }
 
 .link > * {
@@ -29,6 +29,7 @@
     gap: 10px;
     padding: 10px;
     align-items: center;
+    flex-grow: 1;
 }
 
 .logo {
@@ -41,13 +42,13 @@
 }
 
 .logoPlug {
-    background-color: var(--color-secondary_300);
+    background-color: var(--color-secondary-300);
 }
 
 .title {
     margin: 0;
     font-weight: 400;
-    color: var(--color-secondary_800);
+    color: var(--color-secondary-700);
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
@@ -55,7 +56,7 @@
 
 .footer {
     padding: 10px;
-    border-top: 1px solid var(--color-secondary_500);
+    border-top: 1px solid var(--color-secondary-300);
     box-sizing: border-box;
     min-height: 40px;
 }
@@ -66,7 +67,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    color: var(--color-secondary_500);
+    color: var(--color-secondary-400);
     margin: 0;
 }
 

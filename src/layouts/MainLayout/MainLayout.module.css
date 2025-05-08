@@ -2,11 +2,12 @@
     width: 100%;
     display: grid;
     grid-template-columns: 200px 1fr;
-    gap: 20px;
+    gap: var(--padding-primary);
     height: 100%;
+    background-color: var(--color-secondary-200);
 }
 
 .sidebar {
     border-right: 1px solid;
-    border-color: var(--color-secondary_300);
+    border-color: var(--color-secondary-300);
 }

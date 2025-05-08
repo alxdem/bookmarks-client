@@ -13,11 +13,17 @@ const FieldSelect = forwardRef<SelectInstance<OptionProps>, FieldSelectProps>(({
     label,
     error,
 }, ref) => {
+    const classes = cn(
+        styles.field,
+        className,
+        { [styles.isError]: error }
+    );
+
     return (
         <Label
             label={label}
             error={error}
-            className={className}
+            className={classes}
         >
             <Select<OptionProps>
                 ref={ref}
