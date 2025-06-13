@@ -2,6 +2,10 @@
   "name": "My Extension",
   "version": "1.0",
   "manifest_version": 3,
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [],
   "icons": {
     "128": "128.png"
   },
