@@ -1,32 +1,30 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Category} from '@t/commonTypes';
-import { DataContext } from '@context/DataContext';
-import useFetch from '@hooks/useFetch';
-import { checkLocalStorageArray, lSDataSet } from '@utils/methods';
+import { checkLocalStorageArray, lSDataSet, categorySBtoUI } from '@utils/methods';
 import { LSKey } from '@utils/variables';
+import { supabase } from '@utils/supabase';
 
 const useGetCategories = () => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const { userId } = useContext(DataContext) || {};
-    const [getData, isLoading, error] = useFetch<Category[]>();
 
     useEffect(() => {
         const fetchData = async () => {
-            const urlWithParams = `${import.meta.env.VITE_API_URL}/categories?userId=${userId}`;
-            const data = await getData('GET', urlWithParams);
+            const {data} = await supabase.from('categories').select('*');
 
-            if (!data || data.length < 1) {
+            const dataFormatted: Category[] = data?.map(categorySBtoUI) || [];
+
+            if (dataFormatted.length < 1) {
                 return;
             }
 
-            lSDataSet<Category[]>(LSKey.CATEGORIES, data);
-            setCategories(data);
+            lSDataSet<Category[]>(LSKey.CATEGORIES, dataFormatted);
+            setCategories(dataFormatted);
         };
 
         checkLocalStorageArray<Category[]>(LSKey.CATEGORIES, setCategories, fetchData);
     }, []);
 
-    return [categories, isLoading, error] as const;
+    return {categories};
 }
 
 export default useGetCategories;

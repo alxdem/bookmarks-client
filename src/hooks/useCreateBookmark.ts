@@ -1,28 +1,40 @@
 import { useContext } from 'react';
 import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
-import { Bookmark, BookmarkCreate } from '@t/commonTypes';
-import useFetch from '@hooks/useFetch';
+import { BookmarkCreate } from '@t/commonTypes';
 import {lSBookmarkClear} from "@utils/methods.ts";
+import {supabase} from '@utils/supabase';
 
 function useCreateBookmark() {
     const { activeCategoryId, addBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
-    const [createBookmark, isLoading, error] = useFetch<Bookmark>();
 
     const createBookmarkHandler = async (payload: BookmarkCreate) => {
-        const urlWithParams = `${import.meta.env.VITE_API_URL}/items`;
-        const data = await createBookmark('POST', urlWithParams, {
-            ...payload,
-            categoryId: activeCategoryId,
-        });
+        const {data} = await supabase
+            .from('bookmarks')
+            .insert([{
+                url: payload.url,
+                title: payload.title,
+                description: payload.description,
+                category_id: activeCategoryId,
+                user_id: '',
+            }])
+            .select()
+            .single();
 
-        if (!data || !data._id) {
+        if (!data || !data.id) {
             return;
         }
 
         if (addBookmark) {
-            addBookmark(data);
+            addBookmark({
+                id: data.id,
+                title: data.title,
+                description: data.description || undefined,
+                url: data.url,
+                userId: data.user_id,
+                categoryId: data.category_id,
+            });
         }
 
         if (setModalClose) {
@@ -34,7 +46,7 @@ function useCreateBookmark() {
         return data;
     };
 
-    return [createBookmarkHandler, isLoading, error] as const;
+    return [createBookmarkHandler] as const;
 }
 
 export default useCreateBookmark;

@@ -25,8 +25,8 @@ const Modals = () => {
         setConfirmFormText,
         setCurrentEntity,
     } = useContext(ServiceContext) || {};
-    const [deleteCategory, isCategoryLoading] = useDeleteCategory();
-    const [deleteBookmark, isBookmarkLoading] = useDeleteBookmark();
+    const [deleteCategory] = useDeleteCategory();
+    const [deleteBookmark] = useDeleteBookmark();
 
     const close = () => {
         setModalClose();
@@ -41,7 +41,7 @@ const Modals = () => {
     const removeCategory = async () => {
         const res = await deleteCategory(itemId);
 
-        if (!res?._id) {
+        if (!res?.id) {
             return;
         }
 
@@ -52,7 +52,7 @@ const Modals = () => {
     const removeBookmark = async () => {
         const res = await deleteBookmark(itemId);
 
-        if (!res?._id) {
+        if (!res?.id) {
             return;
         }
 
@@ -95,7 +95,6 @@ const Modals = () => {
             {modalType === 'confirm'
                 && <FormConfirm
                     text={confirmFormText}
-                    isLoading={isCategoryLoading || isBookmarkLoading}
                     reject={close}
                     confirm={confirm}
                 />}

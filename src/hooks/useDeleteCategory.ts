@@ -1,35 +1,31 @@
-import { Category } from '@t/commonTypes';
 import { DataContext } from '@context/DataContext';
 import { useContext } from 'react';
-import useFetch from '@hooks/useFetch';
-
-interface DeleteCategoryProps {
-    (
-        categoryId?: string,
-    ): Promise<Category | undefined>;
-}
+import {supabase} from '@utils/supabase';
 
 function useDeleteCategory() {
     const { removeCategory } = useContext(DataContext) || {};
-    const [deleteCategory, isLoading, error] = useFetch<Category>();
 
-    const deleteCategoryHandler: DeleteCategoryProps = async (id) => {
+    const deleteCategoryHandler = async (id?: string) => {
         if (!id) {
             console.error('Не передан id категории для удаления');
             return;
         }
 
-        const urlWithParams = `${import.meta.env.VITE_API_URL}/categories/${id}`;
-        const data = await deleteCategory('DELETE', urlWithParams);
+        const {data} = await supabase
+            .from('categories')
+            .delete()
+            .eq('id', id)
+            .select()
+            .single();
 
-        if (removeCategory && data) {
-            removeCategory(data._id);
+        if (removeCategory && data?.id) {
+            removeCategory(data.id);
         }
 
         return data;
     };
 
-    return [deleteCategoryHandler, isLoading, error] as const;
-};
+    return [deleteCategoryHandler] as const;
+}
 
 export default useDeleteCategory;

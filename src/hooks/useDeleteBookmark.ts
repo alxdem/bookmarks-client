@@ -1,33 +1,31 @@
 import { DataContext } from '@/context/DataContext';
-import { Bookmark } from '@t/commonTypes';
 import { useContext } from 'react';
-import useFetch from '@hooks/useFetch';
-
-interface DeleteBookmarkProps {
-    (id?: string): Promise<Bookmark | undefined>;
-}
+import {supabase} from '@utils/supabase';
 
 function useDeleteBookmark() {
-    const { removeBookmark} = useContext(DataContext) || {};
-    const [deleteBookmark, isLoading, error] = useFetch<Bookmark>();
+    const {removeBookmark} = useContext(DataContext) || {};
 
-    const deleteBookmarkHandler: DeleteBookmarkProps = async (id) => {
+    const deleteBookmarkHandler = async (id?: string) => {
         if (!id) {
             console.error('Не передан id закладки для удаления');
             return;
         }
 
-        const urlWithParams = `${import.meta.env.VITE_API_URL}/items/${id}`;
-        const data = await deleteBookmark('DELETE', urlWithParams);
+        const {data} = await supabase
+            .from('bookmarks')
+            .delete()
+            .eq('id', id)
+            .select()
+            .single();
 
-        if (removeBookmark && data) {
-            removeBookmark(data._id);
+        if (removeBookmark && data?.id) {
+            removeBookmark(data.id);
         }
 
         return data;
     };
 
-    return [deleteBookmarkHandler, isLoading, error] as const;
+    return [deleteBookmarkHandler] as const;
 }
 
 export default useDeleteBookmark;

@@ -1,6 +1,6 @@
 import MainLayout from '@layouts/MainLayout/MainLayout';
 import CardList from '@components/CardList/CardList';
-import { DataProvider } from '@context/DataContext';
+import { DataProvider } from '@context/DataProvider';
 import { ServiceProvider } from '@context/ServiceContext';
 import AuthMiddleware from '@middlewares/AuthMiddleware';
 

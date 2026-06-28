@@ -47,8 +47,8 @@ const CardList = (): JSX.Element => {
         dragStarted.current = false;
         if (!over || active.id === over.id) return;
 
-        const oldIndex = items.findIndex(item => item._id === active.id);
-        const newIndex = items.findIndex(item => item._id === over.id);
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over.id);
         const newOrderItems = arrayMove(items, oldIndex, newIndex);
 
         setItems(newOrderItems);
@@ -62,7 +62,7 @@ const CardList = (): JSX.Element => {
     );
 
     const elements = items.map(item => (
-        <SortableCard id={item._id} key={item._id}>
+        <SortableCard id={item.id} key={item.id}>
             <Card
                 className={styles.card}
                 userId={item.userId}
@@ -71,8 +71,8 @@ const CardList = (): JSX.Element => {
                 description={item.description}
                 categoryId={item.categoryId}
                 order={item.order}
-                onRemove={() => removeBookmark(item._id)}
-                onEdit={() => editBookmark(item._id)}
+                onRemove={() => removeBookmark(item.id)}
+                onEdit={() => editBookmark(item.id)}
             />
         </SortableCard>
     ));
@@ -85,7 +85,7 @@ const CardList = (): JSX.Element => {
                     onDragEnd={onDragEnd}
                     sensors={sensors}
                 >
-                    <SortableContext items={items.map(item => item._id)}>
+                    <SortableContext items={items.map(item => item.id)}>
                         {elements}
                     </SortableContext>
                 </DndContext>
