@@ -1,15 +1,13 @@
-import { useContext } from 'react';
-import { DataContext } from '@context/DataContext';
-import { CategoryCreateFormProps } from '@components/FormCategory/FormCategory.props';
-import { ServiceContext } from '@context/ServiceContext';
-import { Category } from '@/types/commonTypes';
-import useFetch from '@hooks/useFetch';
-import {lSCategoryClear} from "@utils/methods.ts";
+import {useContext} from 'react';
+import {DataContext} from '@context/DataContext';
+import {CategoryCreateFormProps} from '@components/FormCategory/FormCategory.props';
+import {ServiceContext} from '@context/ServiceContext';
+import {lSCategoryClear, categorySBtoUI} from "@utils/methods.ts";
+import {supabase} from '@utils/supabase';
 
 function useCreateCategory() {
-    const { addCategory } = useContext(DataContext) || {};
-    const { setModalClose } = useContext(ServiceContext) || {};
-    const [ createCategory, isLoading, error] = useFetch<Category>();
+    const {addCategory} = useContext(DataContext) || {};
+    const {setModalClose} = useContext(ServiceContext) || {};
 
     const createCategoryHandler = async (payload: CategoryCreateFormProps) => {
         if (!payload.title) {
@@ -17,13 +15,19 @@ function useCreateCategory() {
             return;
         }
 
-        const urlWithParams = `${import.meta.env.VITE_API_URL}/categories`;
-        const data = await createCategory('POST', urlWithParams, payload);
+        const {data, error} = await supabase
+            .from('categories')
+            .insert([payload])
+            .select();
 
-        if (!data || !data._id) return;
+        if (error || !data) return;
+
+        const result = data[0];
+        const category = categorySBtoUI(result);
+
 
         if (addCategory) {
-            addCategory(data);
+            addCategory(category);
         }
 
         if (setModalClose) {
@@ -35,7 +39,7 @@ function useCreateCategory() {
         return data;
     };
 
-    return [createCategoryHandler, isLoading, error] as const;
+    return [createCategoryHandler] as const;
 }
 
 export default useCreateCategory;

@@ -14,12 +14,12 @@ import FieldSelect from '@components/FieldSelect/FieldSelect';
 import { message } from '@utils/variables';
 
 const FormBookmark = ({ type, id }: FormBookmarkProps) => {
-    const [createBookmark, isLoading] = useCreateBookmark();
+    const [createBookmark] = useCreateBookmark();
     const [editBookmark, isEditLoading] = useEditBookmark();
     const { activeCategoryId, categoriesForSelect, bookmarks } = useContext(DataContext) || {};
 
     const isEdit = type === 'bookmarkUpdate' && id !== undefined;
-    const currentBookmark = isEdit ? bookmarks?.find(bookmark => bookmark._id === id) || null : null;
+    const currentBookmark = isEdit ? bookmarks?.find(bookmark => bookmark.id === id) || null : null;
     const isEditType = isEdit && Boolean(currentBookmark);
 
     const {
@@ -30,16 +30,20 @@ const FormBookmark = ({ type, id }: FormBookmarkProps) => {
 
     const formClasses = cn(
         styles.form,
-        { [styles.loading]: isLoading || isEditLoading }
+        { [styles.loading]: isEditLoading }
     );
 
     const onSubmit: SubmitHandler<BookmarkEditOrCreate> = async (payload) => {
         if (isEditType) {
-            if (!currentBookmark?._id) return;
+            if (!currentBookmark?.id) return;
 
-            await editBookmark({ ...payload, _id: currentBookmark?._id });
+            await editBookmark({ ...payload, id: currentBookmark?.id });
         } else {
-            await createBookmark({...payload});
+            await createBookmark({
+                title: payload.title,
+                description: payload.description,
+                url: payload.url,
+            });
         }
     };
 

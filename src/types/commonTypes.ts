@@ -1,10 +1,10 @@
 import { CategoryCreateFormProps } from '@components/FormCategory/FormCategory.props';
+import {Database} from '@/types/database.types.ts';
+import {SetStateAction, ReactNode} from 'react';
 
-export type CrudMethod = 'GET' | 'POST' | 'PATCH' | 'DEL';
 export type ModalTypeCategory = 'categoryCreate' | 'categoryUpdate';
 export type ModalTypeBookmark = 'bookmarkCreate' | 'bookmarkUpdate';
 export type ModalType = ModalTypeCategory | ModalTypeBookmark | 'confirm';
-export type ChildrenProps = string | JSX.Element | JSX.Element[];
 
 export interface Response<T> {
     success?: boolean;
@@ -12,11 +12,11 @@ export interface Response<T> {
 }
 
 export interface ILayout {
-    children: ChildrenProps;
+    children: ReactNode;
 }
 
 export interface Category {
-    _id: string;
+    id: string;
     title: string;
     description: string;
     order: number;
@@ -24,7 +24,7 @@ export interface Category {
 }
 
 export interface Bookmark {
-    _id: string,
+    id: string,
     userId: string,
     title: string,
     url: string,
@@ -37,7 +37,7 @@ export interface Bookmark {
 export interface SetCatchError {
     (
         error: unknown,
-        setError: (value: React.SetStateAction<string>) => void,
+        setError: (value: SetStateAction<string>) => void,
     ): void;
 }
 
@@ -49,12 +49,19 @@ export const isBookmarkType = (type: ModalType): type is ModalTypeBookmark => {
     return type === 'bookmarkCreate' || type === 'bookmarkUpdate';
 }
 
-export type CategoryEdit = Pick<Category, '_id' | 'title' | 'description'>;
+export type CategoryEdit = Pick<Category, 'id' | 'title' | 'description'>;
 export type CategoryEditOrCreate = CategoryCreateFormProps | CategoryEdit;
 
 type BookmarkCreateFormProps = Pick<Bookmark, 'title' | 'description' | 'url' | 'categoryId'>;
-export type BookmarkCreate = Omit<Bookmark, '_id' | 'userId'>;
-export type BookmarkEdit = Pick<Bookmark, '_id' | 'title' | 'description' | 'url' | 'categoryId'>;
+export type BookmarkCreate = Omit<Bookmark, 'id' | 'userId'>;
+export type BookmarkEdit = Pick<Bookmark, 'id' | 'title' | 'description' | 'url' | 'categoryId'>;
 export type BookmarkEditOrCreate = BookmarkCreateFormProps | BookmarkEdit;
 
 export type EntityType = 'category' | 'bookmark' | null;
+
+export type CategoryResponse = Database['public']['Tables']['categories']['Row'];
+export type BookmarkResponse = Database['public']['Tables']['bookmarks']['Row'];
+export type BookmarksSortRequest = {
+    id: string;
+    sort_order: number;
+};

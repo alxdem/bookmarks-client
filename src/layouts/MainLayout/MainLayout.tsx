@@ -14,15 +14,15 @@ const MainLayout = ({ children }: ILayout) => {
         setBookmarks
     } = useContext(DataContext) || {};
 
-    const [categoriesData] = useGetCategories();
+    const {categories} = useGetCategories();
     const { bookmarks } = useGetBookmarks();
 
     useEffect(() => {
-        if (categoriesData.length && setCategories && setActiveCategoryId) {
-            setCategories(categoriesData);
-            setActiveCategoryId(categoriesData[0]._id);
+        if (categories.length && setCategories && setActiveCategoryId) {
+            setCategories(categories);
+            setActiveCategoryId(categories[0].id);
         }
-    }, [categoriesData]);
+    }, [categories]);
 
     useEffect(() => {
         if (bookmarks.length && setBookmarks) {

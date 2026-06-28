@@ -1,4 +1,4 @@
-import { SetCatchError, Category } from '@t/commonTypes';
+import { SetCatchError, Category, Bookmark, CategoryResponse, BookmarkResponse, CategoryEdit, BookmarkEdit, BookmarksSortRequest } from '@t/commonTypes';
 import { OptionProps } from '@components/FieldSelect/FieldSelect.props.ts';
 import { LSKey } from '@utils/variables';
 
@@ -12,13 +12,9 @@ const setCatchError: SetCatchError = (error, setError) => {
 
 const createOptionsFromCategories = (items: Category[]): OptionProps[] => {
     return items.map(item => ({
-        value: item._id,
+        value: item.id,
         label: item.title,
     }));
-};
-
-const hasKey = <T extends object>(obj: T, key: keyof T): boolean => {
-    return key in obj;
 };
 
 const checkLocalStorageArray = <T>(
@@ -48,12 +44,55 @@ const lSDataSet = <T>(key: string, data: T) => {
     localStorage.setItem(key, JSON.stringify(data));
 };
 
+const categorySBtoUI = (category: CategoryResponse): Category => ({
+    id: category.id,
+    description: category.description || '',
+    title: category.title,
+    order: category.sort_order || 0,
+    userId: category.user_id || '',
+});
+
+const categoryToUpdateData = (category: CategoryEdit): CategoryEdit => ({
+    id: category.id,
+    title: category.title,
+    description: category.description || '',
+});
+
+const bookmarkToUpdateData = (bookmark: BookmarkEdit) => ({
+    id: bookmark.id,
+    title: bookmark.title,
+    url: bookmark.url,
+    category_id: bookmark.categoryId,
+    description: bookmark.description || '',
+});
+
+const bookmarkToFE = (bookmark: BookmarkResponse): Bookmark => ({
+    id: bookmark.id,
+    title: bookmark.title,
+    url: bookmark.url,
+    categoryId: bookmark.category_id,
+    description: bookmark.description || '',
+    userId: bookmark.user_id || '',
+    order: bookmark.sort_order || 0,
+});
+
+const bookmarkToResortData = (bookmarks: Bookmark[]): BookmarksSortRequest[] => {
+    return bookmarks.map((item, index) => ({
+        id: item.id,
+        sort_order: index,
+    }))
+};
+
 export {
     setCatchError,
     createOptionsFromCategories,
-    hasKey,
     checkLocalStorageArray,
     lSCategoryClear,
     lSBookmarkClear,
     lSDataSet,
+    categorySBtoUI,
+    categoryToUpdateData,
+    bookmarkToUpdateData,
+    bookmarkToFE,
+    bookmarkToResortData,
 }

@@ -27,22 +27,22 @@ const Nav = ({ className }: NavProps) => {
     };
 
     const elements = categories ? categories.map(item => {
-        const activeClass = item._id === activeCategoryId ? styles.linkActive : null;
+        const activeClass = item.id === activeCategoryId ? styles.linkActive : null;
 
         return (
             <div
-                key={item._id}
+                key={item.id}
                 className={styles.item}
             >
                 <a
                     className={cn(styles.link, activeClass)}
-                    onClick={() => change(item._id)}
+                    onClick={() => change(item.id)}
                 >
                     {item.title}
                 </a>
                 <Button
                     className={cn(styles.button)}
-                    onClick={() => edit(item._id)}
+                    onClick={() => edit(item.id)}
                     shape='square'
                 >
                     <EditIcon />

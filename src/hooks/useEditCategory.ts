@@ -2,24 +2,32 @@ import { CategoryEdit } from '@t/commonTypes';
 import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
 import { useContext } from 'react';
-import useFetch from '@hooks/useFetch';
-import {lSCategoryClear} from "@utils/methods";
+import {lSCategoryClear} from '@utils/methods';
+import {supabase} from '@utils/supabase';
+import {categoryToUpdateData} from '@utils/methods';
 
 function useEditCategory() {
     const { updateCategory } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
-    const [editCategory, isLoading, error] = useFetch<CategoryEdit>();
 
     const editCategoryHandler = async (payload: CategoryEdit) => {
-        const urlWithParams = `${import.meta.env.VITE_API_URL}/categories/${payload._id}`;
-        const data = await editCategory('PATCH', urlWithParams, payload);
+        const {data} = await supabase
+            .from('categories')
+            .update(categoryToUpdateData(payload))
+            .eq('id', payload.id)
+            .select()
+            .single();
 
-        if (!data || !data._id) {
-            return
+        if (!data || !data.id) {
+            return;
         }
 
         if (updateCategory) {
-            updateCategory(data);
+            updateCategory(categoryToUpdateData({
+                id: data.id,
+                title: data.title,
+                description: data.description || '',
+            }));
         }
 
         if (setModalClose) {
@@ -31,7 +39,7 @@ function useEditCategory() {
         return data;
     };
 
-    return [editCategoryHandler, isLoading, error] as const;
+    return [editCategoryHandler] as const;
 }
 
 export default useEditCategory;

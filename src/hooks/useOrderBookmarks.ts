@@ -1,29 +1,38 @@
-import useFetch from '@hooks/useFetch.ts';
-import {Bookmark, Response} from '@t/commonTypes.ts';
-import {lSDataSet} from '@utils/methods.ts';
+import {Bookmark} from '@t/commonTypes.ts';
+import {lSDataSet, bookmarkToResortData, bookmarkToFE} from '@utils/methods.ts';
 import {LSKey} from '@utils/variables.ts';
 import {useContext} from 'react';
+import {supabase} from '@utils/supabase';
 import {DataContext} from '@context/DataContext';
 
 function useOrderBookmarks() {
-    const [fetchItems, isLoading, error] = useFetch<Response<Bookmark[]>>();
-    const { setBookmarks} = useContext(DataContext) || {};
+    const {setBookmarks} = useContext(DataContext) || {};
+
+    const isLoading = false;
 
     const reorder = async (items: Bookmark[]) => {
-        const url = `${import.meta.env.VITE_API_URL}/items/reorder`;
-        const reordered = items.map((item, index) => ({
-            _id: item._id,
-            order: index,
-        }));
-        const data = await fetchItems('POST', url, {
-            reordered
+        const reordered = bookmarkToResortData(items);
+
+        const {data, error} = await supabase.rpc('reorder_bookmarks', {
+            items: reordered,
         });
 
-        if (!data?.success) {
+        if(error){
+            console.error('Reorder error:', error);
+            throw error;
+        }
+
+        console.log('reorder', {
+            data,
+            items,
+            reordered,
+        });
+
+        if (!data) {
             return;
         }
 
-        const bookmarks = data.data || [];
+        const bookmarks = data?.map(item => bookmarkToFE(item));
 
         if (setBookmarks) {
             setBookmarks(bookmarks);
@@ -31,7 +40,7 @@ function useOrderBookmarks() {
         lSDataSet<Bookmark[]>(LSKey.BOOKMARKS, bookmarks);
     };
 
-    return [reorder, isLoading, error] as const;
+    return [reorder, isLoading] as const;
 }
 
 export default useOrderBookmarks;

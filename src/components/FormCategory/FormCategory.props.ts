@@ -1,5 +1,4 @@
 import { ModalTypeCategory } from '@t/commonTypes';
-import { Category } from '@t/commonTypes';
 
 export interface FormCategoryProps {
     type: ModalTypeCategory;
@@ -7,4 +6,7 @@ export interface FormCategoryProps {
     remove: (id: string) => void;
 }
 
-export type CategoryCreateFormProps = Pick<Category, 'title' | 'description'>;
+export type CategoryCreateFormProps = {
+    title: string;
+    description?: string;
+};

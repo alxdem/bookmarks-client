@@ -18,12 +18,12 @@ const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
     const isEdit = type === 'categoryUpdate' && id !== undefined;
     const mainBtnText = isEdit ? message.SAVE_TEXT : 'Создать';
 
-    const currentCategory: Category | null = isEdit ? categories?.find(category => category._id === id) || null : null;
+    const currentCategory: Category | null = isEdit ? categories?.find(category => category.id === id) || null : null;
 
     const isEditType = isEdit && Boolean(currentCategory);
 
-    const [createCategory, isLoading] = useCreateCategory();
-    const [editCategory, isEditLoading] = useEditCategory();
+    const [createCategory] = useCreateCategory();
+    const [editCategory] = useEditCategory();
 
     const {
         handleSubmit,
@@ -33,7 +33,7 @@ const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
         defaultValues: {
             title: '',
             description: '',
-            _id: '',
+            id: '',
         }
     });
 
@@ -46,16 +46,23 @@ const FormCategory = ({ type, id, remove }: FormCategoryProps) => {
 
     const formClasses = cn(
         styles.form,
-        { [styles.loading]: isLoading || isEditLoading}
+        // { [styles.loading]: isLoading || isEditLoading}
     );
 
     const onSubmit: SubmitHandler<CategoryEditOrCreate> = async (payload) => {
         if (isEditType) {
-            if (!currentCategory?._id) return;
+            if (!currentCategory?.id) return;
 
-            await editCategory({ ...payload, _id: currentCategory?._id });
+            await editCategory({
+                title: payload.title,
+                description: payload.description || '',
+                id: currentCategory?.id
+            });
         } else {
-            await createCategory({ ...payload });
+            await createCategory({
+                title: payload.title,
+                description: payload.description || '',
+            });
         }
     };
 

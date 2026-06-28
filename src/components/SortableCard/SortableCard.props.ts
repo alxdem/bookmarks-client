@@ -1,7 +1,7 @@
-import { ChildrenProps } from '@t/commonTypes';
+import {ReactNode} from 'react';
 
 export interface SortableCardProps {
     id: string;
-    children: ChildrenProps;
+    children: ReactNode;
     key: string;
 }
