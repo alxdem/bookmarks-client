@@ -18,6 +18,9 @@
     "service_worker": "background.js"
   },
   "host_permissions": [
-    "https://bookmarks-server-dun.vercel.app/"
-  ]
+    "https://*.supabase.co"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://esm.sh; object-src 'self'"
+  }
 }

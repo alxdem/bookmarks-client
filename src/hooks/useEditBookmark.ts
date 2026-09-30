@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DataContext } from '@context/DataContext';
 import { ServiceContext } from '@context/ServiceContext';
 import { BookmarkEdit } from '@t/commonTypes';
@@ -9,33 +9,44 @@ function useEditBookmark() {
     const { updateBookmark } = useContext(DataContext) || {};
     const { setModalClose } = useContext(ServiceContext) || {};
 
-    const isLoading = false;
-    const error = '';
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const editBookmarkHandler = async (payload: BookmarkEdit) => {
+        setIsLoading(true);
+        setError('');
 
-        const {data} = await supabase
-            .from('bookmarks')
-            .update(bookmarkToUpdateData(payload))
-            .eq('id', payload.id)
-            .select()
-            .single();
+        try {
+            const {data, error: supabaseError} = await supabase
+                .from('bookmarks')
+                .update(bookmarkToUpdateData(payload))
+                .eq('id', payload.id)
+                .select()
+                .single();
 
-        if (!data || !data?.id) {
-            return;
+            if (supabaseError) {
+                setError(supabaseError.message);
+                return;
+            }
+
+            if (!data || !data?.id) {
+                return;
+            }
+
+            if (updateBookmark) {
+                updateBookmark(bookmarkToFE(data));
+            }
+
+            if (setModalClose) {
+                setModalClose();
+            }
+
+            lSBookmarkClear();
+
+            return data;
+        } finally {
+            setIsLoading(false);
         }
-
-        if (updateBookmark) {
-            updateBookmark(bookmarkToFE(data));
-        }
-
-        if (setModalClose) {
-            setModalClose();
-        }
-
-        lSBookmarkClear();
-
-        return data;
     };
 
     return [editBookmarkHandler, isLoading, error] as const;
